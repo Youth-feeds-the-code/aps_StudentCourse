@@ -1,0 +1,20 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <!--相当于把 Action 方法中保存的内容，放在此处 输出
+        默认Razor视图会从后台输出的字符串里包含的<转义成 &lt;
+        为了不转义，使用Raw方法，来输出html标签源码!
+        -->
+    @Html.Raw(ViewBag.HtmlStr)
+</body>
+</html>

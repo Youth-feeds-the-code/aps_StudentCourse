@@ -1,0 +1,58 @@
+﻿@model StudentCourse.Models.教师 
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add</title>
+
+    <style type="text/css">
+        #tbList {
+            border: 1px solid #0094ff;
+            width: 600px;
+            margin: 10px auto;
+            border-collapse: collapse;
+        }
+
+            #tbList th, td {
+                border: 1px solid #0094ff;
+                padding: 10px;
+            }
+    </style>
+
+</head>
+<body>
+    @using (Html.BeginForm("Add", "Teacher", FormMethod.Post))
+    {
+    <table id="tbList">
+        <tr>
+            <td>姓名：</td>
+            <td>@Html.TextBoxFor(u => u.教师姓名)</td>
+        </tr>
+        <tr>
+            <td>性别：</td>
+            <!--使用HtmlHelper的强类型方法 生成下拉框，并自动根据 model 属性里的性别 值，设置 下拉框的默认选中项-->
+            <td>@Html.DropDownListFor(a => a.性别, ViewBag.SexList as IEnumerable<SelectListItem>)</td>
+        </tr>
+
+        <tr>
+            <td>院系：</td>
+            <td>@Html.DropDownListFor(a => a.院系编号, ViewBag.DeptList as IEnumerable<SelectListItem>)</td>
+        </tr>
+
+        <tr>
+            <td>密码：</td>
+            <td>@Html.TextBoxFor(u => u.密码)</td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="添加" /></td>
+        </tr>
+
+    </table>
+    }   
+</body>
+</html>

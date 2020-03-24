@@ -1,0 +1,54 @@
+﻿@using StudentCourse.Models
+@model StudentCourse.Models.课程
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+
+    <script type="text/javascript" src="@Url.Content("~/js/jquery-validation-1.15.0/lib/jquery-1.11.1.js")"></script>
+
+    <script type="text/javascript">
+        function selectBysemester() {
+            var ddl = document.getElementById("ddList1")
+            var text = ddl.options[ddl.options.selectedIndex].value;
+            $.ajax({
+                type: "POST",
+                url: "/Test/About/" + text,
+                cache: false,
+                data: null,
+                datatype:"json",
+                success: function (result) {
+                    
+                    var count = 0;
+                    $("#ddList2").empty(); 
+                        for(var key in result){
+                            if(result.hasOwnProperty(key)){
+                                count++;
+                                $("#ddList2").append("<option  value=" + key.Value + ">" + key.Text + "</option>");
+                            }
+                        }                   
+                    alert(count);
+                        $("#ddList2").empty(); //首先清空select现在有的内容
+                        for (var i = 0; i < count; i++) {
+                            var item = result[i];
+                            $("#ddList2").append("<option  value=" + item.Value + ">" + item.Text + "</option>");
+                        }               
+                }
+            })
+        };
+    </script>
+
+</head>
+<body>
+    @Html.DropDownListFor(u =>u.院系编号, ViewBag.DeptList as IEnumerable<SelectListItem>, new { id = "ddList1", onchange = "selectBysemester()" }) <br />
+    @Html.DropDownListFor(u => u.授课老师, ViewBag.TeachertList as IEnumerable<SelectListItem>, new { id = "ddList2" })<br />
+</body>
+</html>
+
+

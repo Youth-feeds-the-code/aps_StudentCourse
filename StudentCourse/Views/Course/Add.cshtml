@@ -1,0 +1,129 @@
+﻿@model StudentCourse.Models.课程
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>添加课程</title>
+    <script type="text/javascript" src="@Url.Content("~/js/jquery-validation-1.15.0/lib/jquery-1.11.1.js")"></script>
+
+    <style type="text/css">
+        #tbList {
+            border: 1px solid #0094ff;
+            width: 600px;
+            margin: 10px auto;
+            border-collapse: collapse;
+        }
+
+            #tbList th, td {
+                border: 1px solid #0094ff;
+                padding: 10px;
+            }
+    </style>
+
+    <script type="text/javascript">
+        function selectBysemester() {
+            var ddl = document.getElementById("deptDropDownList")
+            var text = ddl.options[ddl.options.selectedIndex].value;
+            $.ajax({
+                type: "POST",
+                url: "/Course/deptTeacherLinkage/" + text,
+                cache: false,
+                data: null,
+                datatype: "json",
+                success: function (result) {
+
+                    var count = 0;
+                    $("#teacherDropDownList").empty();
+                    for (var key in result) {
+                        if (result.hasOwnProperty(key)) {
+                            count++;
+                        }
+                    }
+                    $("#teacherDropDownList").empty(); //首先清空select现在有的内容
+                    for (var i = 0; i < count; i++) {
+                        var item = result[i];
+                        $("#teacherDropDownList").append("<option  value=" + item.Value + ">" + item.Text + "</option>");
+                    }
+                }
+            })
+        };
+    </script>
+
+</head>
+<body>
+    @using (Html.BeginForm("Add", "Course", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+    <table id="tbList">
+        <tr>
+            <td>课程名称：</td>
+            <td>@Html.TextBoxFor(u => u.课程名称)</td>
+        </tr>
+
+        <!--添加ajax请求 修改 院系时 授课老师信息刷新-->
+        <tr>
+            <td>院系：</td>
+            <td>@Html.DropDownListFor(a => a.院系编号, ViewBag.DeptList as IEnumerable<SelectListItem>, new { id = "deptDropDownList", onchange = "selectBysemester()" })</td>
+        </tr>
+
+        <tr>
+            <td>授课老师：</td>
+            <!--使用HtmlHelper的强类型方法 生成下拉框，并自动根据 model 属性里的性别 值，设置 下拉框的默认选中项-->
+            <td>@Html.DropDownListFor(a => a.授课老师, ViewBag.teacherList as IEnumerable<SelectListItem>, new { id = "teacherDropDownList" })</td>
+        </tr>
+
+        <tr>
+            <td>学分：</td>
+            <td>@Html.DropDownListFor(a => a.学分, ViewBag.creditList as IEnumerable<SelectListItem>)</td>
+        </tr>
+        <tr>
+            <td>课程分类：</td>
+            <td>@Html.DropDownListFor(a => a.课程分类, ViewBag.courseTypeList as IEnumerable<SelectListItem>)</td>
+        </tr>
+        <tr>
+            <td>限制人数：</td>
+            <td>@Html.TextBoxFor(a => a.限制人数)</td>
+        </tr>
+        <tr>
+            <td>开课对象：</td>
+            <td>@Html.TextBoxFor(a => a.开课对象)</td>
+        </tr>
+        <tr>
+            <td>上课时间：</td>
+            <td>@Html.TextBoxFor(a => a.上课时间)</td>
+        </tr>
+        <tr>
+            <td>上课地点：</td>
+            <td>@Html.TextBoxFor(a => a.上课地点)</td>
+        </tr>
+        <tr>
+            <td>课时：</td>
+            <td>@Html.DropDownListFor(a => a.课时, ViewBag.periodList as IEnumerable<SelectListItem>)</td>
+        </tr>
+        <tr>
+            <td>学期：</td>
+            <td>@Html.DropDownListFor(a => a.备用字段1, ViewBag.semesterList as IEnumerable<SelectListItem>)</td>
+        </tr>
+        <tr>
+            <td>图片：</td>
+            <td>
+                <input name="fileupload" accept="image/gif, image/jpeg, image/png ,image/jpg" type="file" value="" />
+            </td>
+        </tr>
+        <tr>
+            <td>课程简介：</td>
+            <td>@Html.TextAreaFor(a => a.课程简介, 10, 60, null)</td>
+        </tr>
+
+        <tr>
+            <td colspan="2"><input type="submit" value="添加" /></td>
+        </tr>
+
+    </table>
+    }
+</body>
+</html>

@@ -1,0 +1,68 @@
+﻿@using StudentCourse.Models
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>About</title>
+    <style type="text/css">
+        #tbList {
+            border:1px solid #0094ff;
+            width:600px;
+            margin:10px auto;
+            border-collapse:collapse;
+        }
+        #tbList th,td{
+            border:1px solid #0094ff;
+            padding:10px;
+        }
+    </style>
+
+    <script type="text/javascript">
+        function del(id) {
+            if (confirm("您确定要删除？亲~")) {
+                window.location = "/Teacher/del/" + id;
+            }
+        }
+
+    </script>
+
+</head>
+<body>
+    <table id="tbList">
+        <tr>
+            <th>id</th>
+            <th>姓名</th>
+            <th>性别</th>
+            <th>学院</th>
+            <th>职称</th>
+            <th>密码</th>
+            <th>操作</th>
+        </tr>
+        <!-- 遍历Action方法 设置给 Viewdata 的集合数据，生成HTML代码-->
+        @foreach (教师 a in ViewData["DataList"] as List<教师>)
+        {
+        <tr>
+            <td>@a.教师编号</td>
+            <td>@a.教师姓名</td>
+        
+            <td>@a.性别</td>
+            <td>@a.院系.院系名</td>
+            <td>@a.职称</td>
+            <td>@a.密码</td>
+            <td>
+                <a href="javascript:del(@a.教师编号)">删除</a>
+                <a href="/Home/modify/@a.教师编号">修改</a>
+            </td>
+        </tr>
+        }
+        <tr>
+            <td colspan="7"><a href="/Home/add">添加</a></td>
+        </tr>
+    </table>
+</body>
+</html>

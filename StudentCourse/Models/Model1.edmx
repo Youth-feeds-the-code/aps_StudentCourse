@@ -1,0 +1,835 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="sunnyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="管理员">
+          <Key>
+            <PropertyRef Name="管理员编号" />
+          </Key>
+          <Property Name="管理员编号" Type="int" Nullable="false" />
+          <Property Name="管理员名" Type="varchar" MaxLength="255" />
+          <Property Name="管理员密码" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="备用字段1" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段2" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段3" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段4" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段5" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="教师">
+          <Key>
+            <PropertyRef Name="教师编号" />
+          </Key>
+          <Property Name="教师编号" Type="int" Nullable="false" />
+          <Property Name="教师姓名" Type="varchar" MaxLength="255" />
+          <Property Name="院系编号" Type="int" />
+          <Property Name="密码" Type="varchar" MaxLength="255" />
+          <Property Name="职称" Type="varchar" MaxLength="255" />
+          <Property Name="性别" Type="varchar" MaxLength="2" />
+          <Property Name="年龄" Type="int" />
+          <Property Name="入职时间" Type="date" />
+          <Property Name="教师图片" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段1" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段2" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段3" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段4" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段5" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="课程">
+          <Key>
+            <PropertyRef Name="课程编号" />
+          </Key>
+          <Property Name="课程编号" Type="int" Nullable="false" />
+          <Property Name="课程名称" Type="varchar" MaxLength="255" />
+          <Property Name="授课老师" Type="int" />
+          <Property Name="学分" Type="int" />
+          <Property Name="课程分类" Type="varchar" MaxLength="255" />
+          <Property Name="限制人数" Type="int" />
+          <Property Name="开课对象" Type="varchar" MaxLength="255" />
+          <Property Name="上课时间" Type="varchar" MaxLength="255" />
+          <Property Name="上课地点" Type="varchar" MaxLength="255" />
+          <Property Name="课程简介" Type="varchar" MaxLength="255" />
+          <Property Name="课程图片" Type="varchar" MaxLength="255" />
+          <Property Name="院系编号" Type="int" />
+          <Property Name="课时" Type="int" Nullable="false" />
+          <Property Name="备用字段1" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段2" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段3" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段4" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段5" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“sunny.dbo.时间”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="时间">
+          <Key>
+            <PropertyRef Name="各类开发时间编号" />
+          </Key>
+          <Property Name="各类开发时间编号" Type="int" Nullable="false" />
+          <Property Name="时间名" Type="varchar" MaxLength="255" />
+          <Property Name="类名" Type="varchar" MaxLength="255" />
+          <Property Name="开始时间" Type="date" />
+          <Property Name="结束时间" Type="date" />
+          <Property Name="备用字段1" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段2" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段3" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段4" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段5" Type="varchar" MaxLength="255" />
+          <Property Name="是否有效字段" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="通知">
+          <Key>
+            <PropertyRef Name="通知公告编号" />
+          </Key>
+          <Property Name="通知公告编号" Type="int" Nullable="false" />
+          <Property Name="通知公告标题" Type="varchar" MaxLength="1" />
+          <Property Name="通知公告内容" Type="text" />
+          <Property Name="通知公告发布时间" Type="datetime" />
+          <Property Name="公告发布员" Type="int" />
+          <Property Name="备用字段1" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段2" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段3" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段4" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段5" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="选课">
+          <Key>
+            <PropertyRef Name="选课学生的学号" />
+            <PropertyRef Name="学生所选课程的编号" />
+          </Key>
+          <Property Name="选课学生的学号" Type="int" Nullable="false" />
+          <Property Name="学生所选课程的编号" Type="int" Nullable="false" />
+          <Property Name="学生修课的成绩" Type="float" />
+          <Property Name="备用字段1" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段2" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段3" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段4" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段5" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="学生">
+          <Key>
+            <PropertyRef Name="学生学号" />
+          </Key>
+          <Property Name="学生学号" Type="int" Nullable="false" />
+          <Property Name="学生姓名" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="学生性别" Type="int" Nullable="false" />
+          <Property Name="学生年龄" Type="int" Nullable="false" />
+          <Property Name="学生年级" Type="int" />
+          <Property Name="学生所属专业" Type="int" />
+          <Property Name="学生登录密码" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="学生照片" Type="varchar" MaxLength="255" />
+          <Property Name="身份证号" Type="varchar" MaxLength="255" />
+          <Property Name="学生照片1" Type="varchar" MaxLength="255" />
+          <Property Name="学生照片2" Type="varchar" MaxLength="255" />
+          <Property Name="学生照片3" Type="varchar" MaxLength="255" />
+          <Property Name="学生照片4" Type="varchar" MaxLength="255" />
+          <Property Name="学生照片5" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="院系">
+          <Key>
+            <PropertyRef Name="院系编号" />
+          </Key>
+          <Property Name="院系编号" Type="int" Nullable="false" />
+          <Property Name="院系名" Type="varchar" MaxLength="255" />
+          <Property Name="院长" Type="int" />
+          <Property Name="备用字段1" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段2" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段3" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段4" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段5" Type="varchar" MaxLength="255" />
+          <Property Name="是否有效" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="专业">
+          <Key>
+            <PropertyRef Name="专业编号" />
+          </Key>
+          <Property Name="专业编号" Type="int" Nullable="false" />
+          <Property Name="专业名称" Type="varchar" MaxLength="255" />
+          <Property Name="所属院系" Type="int" />
+          <Property Name="备用字段1" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段2" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段3" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段4" Type="varchar" MaxLength="255" />
+          <Property Name="备用字段5" Type="varchar" MaxLength="255" />
+          <Property Name="是否有效" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <Association Name="FK__教师__院系编号__5E8A0973">
+          <End Role="院系" Type="Self.院系" Multiplicity="0..1" />
+          <End Role="教师" Type="Self.教师" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="院系">
+              <PropertyRef Name="院系编号" />
+            </Principal>
+            <Dependent Role="教师">
+              <PropertyRef Name="院系编号" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__课程__授课老师__55F4C372">
+          <End Role="教师" Type="Self.教师" Multiplicity="0..1" />
+          <End Role="课程" Type="Self.课程" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="教师">
+              <PropertyRef Name="教师编号" />
+            </Principal>
+            <Dependent Role="课程">
+              <PropertyRef Name="授课老师" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__课程__院系编号__57DD0BE4">
+          <End Role="院系" Type="Self.院系" Multiplicity="0..1" />
+          <End Role="课程" Type="Self.课程" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="院系">
+              <PropertyRef Name="院系编号" />
+            </Principal>
+            <Dependent Role="课程">
+              <PropertyRef Name="院系编号" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__通知__公告发布员__56E8E7AB">
+          <End Role="管理员" Type="Self.管理员" Multiplicity="0..1" />
+          <End Role="通知" Type="Self.通知" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="管理员">
+              <PropertyRef Name="管理员编号" />
+            </Principal>
+            <Dependent Role="通知">
+              <PropertyRef Name="公告发布员" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__选课__选课学生的学号__5CA1C101">
+          <End Role="学生" Type="Self.学生" Multiplicity="1" />
+          <End Role="选课" Type="Self.选课" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="学生">
+              <PropertyRef Name="学生学号" />
+            </Principal>
+            <Dependent Role="选课">
+              <PropertyRef Name="选课学生的学号" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__选课__学生所选课程的编号__5D95E53A">
+          <End Role="课程" Type="Self.课程" Multiplicity="1" />
+          <End Role="选课" Type="Self.选课" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="课程">
+              <PropertyRef Name="课程编号" />
+            </Principal>
+            <Dependent Role="选课">
+              <PropertyRef Name="学生所选课程的编号" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__学生__学生所属专业__55009F39">
+          <End Role="专业" Type="Self.专业" Multiplicity="0..1" />
+          <End Role="学生" Type="Self.学生" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="专业">
+              <PropertyRef Name="专业编号" />
+            </Principal>
+            <Dependent Role="学生">
+              <PropertyRef Name="学生所属专业" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__院系__院长__5AB9788F">
+          <End Role="教师" Type="Self.教师" Multiplicity="0..1" />
+          <End Role="院系" Type="Self.院系" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="教师">
+              <PropertyRef Name="教师编号" />
+            </Principal>
+            <Dependent Role="院系">
+              <PropertyRef Name="院长" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__专业__所属院系__58D1301D">
+          <End Role="院系" Type="Self.院系" Multiplicity="0..1" />
+          <End Role="专业" Type="Self.专业" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="院系">
+              <PropertyRef Name="院系编号" />
+            </Principal>
+            <Dependent Role="专业">
+              <PropertyRef Name="所属院系" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="sunnyModelStoreContainer">
+          <EntitySet Name="管理员" EntityType="Self.管理员" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="教师" EntityType="Self.教师" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="课程" EntityType="Self.课程" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="通知" EntityType="Self.通知" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="选课" EntityType="Self.选课" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="学生" EntityType="Self.学生" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="院系" EntityType="Self.院系" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="专业" EntityType="Self.专业" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="时间" EntityType="Self.时间" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [时间].[各类开发时间编号] AS [各类开发时间编号], 
+    [时间].[时间名] AS [时间名], 
+    [时间].[类名] AS [类名], 
+    [时间].[开始时间] AS [开始时间], 
+    [时间].[结束时间] AS [结束时间], 
+    [时间].[备用字段1] AS [备用字段1], 
+    [时间].[备用字段2] AS [备用字段2], 
+    [时间].[备用字段3] AS [备用字段3], 
+    [时间].[备用字段4] AS [备用字段4], 
+    [时间].[备用字段5] AS [备用字段5], 
+    [时间].[是否有效字段] AS [是否有效字段]
+    FROM [dbo].[时间] AS [时间]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__教师__院系编号__5E8A0973" Association="Self.FK__教师__院系编号__5E8A0973">
+            <End Role="院系" EntitySet="院系" />
+            <End Role="教师" EntitySet="教师" />
+          </AssociationSet>
+          <AssociationSet Name="FK__课程__授课老师__55F4C372" Association="Self.FK__课程__授课老师__55F4C372">
+            <End Role="教师" EntitySet="教师" />
+            <End Role="课程" EntitySet="课程" />
+          </AssociationSet>
+          <AssociationSet Name="FK__课程__院系编号__57DD0BE4" Association="Self.FK__课程__院系编号__57DD0BE4">
+            <End Role="院系" EntitySet="院系" />
+            <End Role="课程" EntitySet="课程" />
+          </AssociationSet>
+          <AssociationSet Name="FK__通知__公告发布员__56E8E7AB" Association="Self.FK__通知__公告发布员__56E8E7AB">
+            <End Role="管理员" EntitySet="管理员" />
+            <End Role="通知" EntitySet="通知" />
+          </AssociationSet>
+          <AssociationSet Name="FK__选课__选课学生的学号__5CA1C101" Association="Self.FK__选课__选课学生的学号__5CA1C101">
+            <End Role="学生" EntitySet="学生" />
+            <End Role="选课" EntitySet="选课" />
+          </AssociationSet>
+          <AssociationSet Name="FK__选课__学生所选课程的编号__5D95E53A" Association="Self.FK__选课__学生所选课程的编号__5D95E53A">
+            <End Role="课程" EntitySet="课程" />
+            <End Role="选课" EntitySet="选课" />
+          </AssociationSet>
+          <AssociationSet Name="FK__学生__学生所属专业__55009F39" Association="Self.FK__学生__学生所属专业__55009F39">
+            <End Role="专业" EntitySet="专业" />
+            <End Role="学生" EntitySet="学生" />
+          </AssociationSet>
+          <AssociationSet Name="FK__院系__院长__5AB9788F" Association="Self.FK__院系__院长__5AB9788F">
+            <End Role="教师" EntitySet="教师" />
+            <End Role="院系" EntitySet="院系" />
+          </AssociationSet>
+          <AssociationSet Name="FK__专业__所属院系__58D1301D" Association="Self.FK__专业__所属院系__58D1301D">
+            <End Role="院系" EntitySet="院系" />
+            <End Role="专业" EntitySet="专业" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="sunnyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="管理员">
+          <Key>
+            <PropertyRef Name="管理员编号" />
+          </Key>
+          <Property Name="管理员编号" Type="Int32" Nullable="false" />
+          <Property Name="管理员名" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="管理员密码" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="备用字段1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段3" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段4" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段5" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="通知" Relationship="Self.FK__通知__公告发布员__56E8E7AB" FromRole="管理员" ToRole="通知" />
+        </EntityType>
+        <EntityType Name="教师">
+          <Key>
+            <PropertyRef Name="教师编号" />
+          </Key>
+          <Property Name="教师编号" Type="Int32" Nullable="false" />
+          <Property Name="教师姓名" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="院系编号" Type="Int32" />
+          <Property Name="密码" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="职称" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="性别" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="年龄" Type="Int32" />
+          <Property Name="入职时间" Type="DateTime" Precision="0" />
+          <Property Name="教师图片" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段3" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段4" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段5" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="院系" Relationship="Self.FK__教师__院系编号__5E8A0973" FromRole="教师" ToRole="院系" />
+          <NavigationProperty Name="课程" Relationship="Self.FK__课程__授课老师__55F4C372" FromRole="教师" ToRole="课程" />
+          <NavigationProperty Name="院系1" Relationship="Self.FK__院系__院长__5AB9788F" FromRole="教师" ToRole="院系" />
+        </EntityType>
+        <EntityType Name="课程">
+          <Key>
+            <PropertyRef Name="课程编号" />
+          </Key>
+          <Property Name="课程编号" Type="Int32" Nullable="false" />
+          <Property Name="课程名称" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="授课老师" Type="Int32" />
+          <Property Name="学分" Type="Int32" />
+          <Property Name="课程分类" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="限制人数" Type="Int32" />
+          <Property Name="开课对象" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="上课时间" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="上课地点" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="课程简介" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="课程图片" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="院系编号" Type="Int32" />
+          <Property Name="课时" Type="Int32" Nullable="false" />
+          <Property Name="备用字段1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段3" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段4" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段5" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="教师" Relationship="Self.FK__课程__授课老师__55F4C372" FromRole="课程" ToRole="教师" />
+          <NavigationProperty Name="院系" Relationship="Self.FK__课程__院系编号__57DD0BE4" FromRole="课程" ToRole="院系" />
+          <NavigationProperty Name="选课" Relationship="Self.FK__选课__学生所选课程的编号__5D95E53A" FromRole="课程" ToRole="选课" />
+        </EntityType>
+        <EntityType Name="通知">
+          <Key>
+            <PropertyRef Name="通知公告编号" />
+          </Key>
+          <Property Name="通知公告编号" Type="Int32" Nullable="false" />
+          <Property Name="通知公告标题" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="通知公告内容" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="通知公告发布时间" Type="DateTime" Precision="3" />
+          <Property Name="公告发布员" Type="Int32" />
+          <Property Name="备用字段1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段3" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段4" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段5" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="管理员" Relationship="Self.FK__通知__公告发布员__56E8E7AB" FromRole="通知" ToRole="管理员" />
+        </EntityType>
+        <EntityType Name="选课">
+          <Key>
+            <PropertyRef Name="选课学生的学号" />
+            <PropertyRef Name="学生所选课程的编号" />
+          </Key>
+          <Property Name="选课学生的学号" Type="Int32" Nullable="false" />
+          <Property Name="学生所选课程的编号" Type="Int32" Nullable="false" />
+          <Property Name="学生修课的成绩" Type="Double" />
+          <Property Name="备用字段1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段3" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段4" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段5" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="课程" Relationship="Self.FK__选课__学生所选课程的编号__5D95E53A" FromRole="选课" ToRole="课程" />
+          <NavigationProperty Name="学生" Relationship="Self.FK__选课__选课学生的学号__5CA1C101" FromRole="选课" ToRole="学生" />
+        </EntityType>
+        <EntityType Name="学生">
+          <Key>
+            <PropertyRef Name="学生学号" />
+          </Key>
+          <Property Name="学生学号" Type="Int32" Nullable="false" />
+          <Property Name="学生姓名" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="学生性别" Type="Int32" Nullable="false" />
+          <Property Name="学生年龄" Type="Int32" Nullable="false" />
+          <Property Name="学生年级" Type="Int32" />
+          <Property Name="学生所属专业" Type="Int32" />
+          <Property Name="学生登录密码" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="学生照片" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="身份证号" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="学生照片1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="学生照片2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="学生照片3" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="学生照片4" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="学生照片5" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="选课" Relationship="Self.FK__选课__选课学生的学号__5CA1C101" FromRole="学生" ToRole="选课" />
+          <NavigationProperty Name="专业" Relationship="Self.FK__学生__学生所属专业__55009F39" FromRole="学生" ToRole="专业" />
+        </EntityType>
+        <EntityType Name="院系">
+          <Key>
+            <PropertyRef Name="院系编号" />
+          </Key>
+          <Property Name="院系编号" Type="Int32" Nullable="false" />
+          <Property Name="院系名" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="院长" Type="Int32" />
+          <Property Name="备用字段1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段3" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段4" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段5" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="是否有效" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="教师" Relationship="Self.FK__教师__院系编号__5E8A0973" FromRole="院系" ToRole="教师" />
+          <NavigationProperty Name="教师1" Relationship="Self.FK__院系__院长__5AB9788F" FromRole="院系" ToRole="教师" />
+          <NavigationProperty Name="课程" Relationship="Self.FK__课程__院系编号__57DD0BE4" FromRole="院系" ToRole="课程" />
+          <NavigationProperty Name="专业" Relationship="Self.FK__专业__所属院系__58D1301D" FromRole="院系" ToRole="专业" />
+        </EntityType>
+        <EntityType Name="专业">
+          <Key>
+            <PropertyRef Name="专业编号" />
+          </Key>
+          <Property Name="专业编号" Type="Int32" Nullable="false" />
+          <Property Name="专业名称" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="所属院系" Type="Int32" />
+          <Property Name="备用字段1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段3" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段4" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段5" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="是否有效" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="学生" Relationship="Self.FK__学生__学生所属专业__55009F39" FromRole="专业" ToRole="学生" />
+          <NavigationProperty Name="院系" Relationship="Self.FK__专业__所属院系__58D1301D" FromRole="专业" ToRole="院系" />
+        </EntityType>
+        <EntityType Name="时间">
+          <Key>
+            <PropertyRef Name="各类开发时间编号" />
+          </Key>
+          <Property Name="各类开发时间编号" Type="Int32" Nullable="false" />
+          <Property Name="时间名" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="类名" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="开始时间" Type="DateTime" Precision="0" />
+          <Property Name="结束时间" Type="DateTime" Precision="0" />
+          <Property Name="备用字段1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段3" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段4" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="备用字段5" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="是否有效字段" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK__通知__公告发布员__56E8E7AB">
+          <End Role="管理员" Type="Self.管理员" Multiplicity="0..1" />
+          <End Role="通知" Type="Self.通知" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="管理员">
+              <PropertyRef Name="管理员编号" />
+            </Principal>
+            <Dependent Role="通知">
+              <PropertyRef Name="公告发布员" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__教师__院系编号__5E8A0973">
+          <End Role="院系" Type="Self.院系" Multiplicity="0..1" />
+          <End Role="教师" Type="Self.教师" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="院系">
+              <PropertyRef Name="院系编号" />
+            </Principal>
+            <Dependent Role="教师">
+              <PropertyRef Name="院系编号" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__课程__授课老师__55F4C372">
+          <End Role="教师" Type="Self.教师" Multiplicity="0..1" />
+          <End Role="课程" Type="Self.课程" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="教师">
+              <PropertyRef Name="教师编号" />
+            </Principal>
+            <Dependent Role="课程">
+              <PropertyRef Name="授课老师" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__院系__院长__5AB9788F">
+          <End Role="教师" Type="Self.教师" Multiplicity="0..1" />
+          <End Role="院系" Type="Self.院系" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="教师">
+              <PropertyRef Name="教师编号" />
+            </Principal>
+            <Dependent Role="院系">
+              <PropertyRef Name="院长" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__课程__院系编号__57DD0BE4">
+          <End Role="院系" Type="Self.院系" Multiplicity="0..1" />
+          <End Role="课程" Type="Self.课程" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="院系">
+              <PropertyRef Name="院系编号" />
+            </Principal>
+            <Dependent Role="课程">
+              <PropertyRef Name="院系编号" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__选课__学生所选课程的编号__5D95E53A">
+          <End Role="课程" Type="Self.课程" Multiplicity="1" />
+          <End Role="选课" Type="Self.选课" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="课程">
+              <PropertyRef Name="课程编号" />
+            </Principal>
+            <Dependent Role="选课">
+              <PropertyRef Name="学生所选课程的编号" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__选课__选课学生的学号__5CA1C101">
+          <End Role="学生" Type="Self.学生" Multiplicity="1" />
+          <End Role="选课" Type="Self.选课" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="学生">
+              <PropertyRef Name="学生学号" />
+            </Principal>
+            <Dependent Role="选课">
+              <PropertyRef Name="选课学生的学号" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__学生__学生所属专业__55009F39">
+          <End Role="专业" Type="Self.专业" Multiplicity="0..1" />
+          <End Role="学生" Type="Self.学生" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="专业">
+              <PropertyRef Name="专业编号" />
+            </Principal>
+            <Dependent Role="学生">
+              <PropertyRef Name="学生所属专业" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__专业__所属院系__58D1301D">
+          <End Role="院系" Type="Self.院系" Multiplicity="0..1" />
+          <End Role="专业" Type="Self.专业" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="院系">
+              <PropertyRef Name="院系编号" />
+            </Principal>
+            <Dependent Role="专业">
+              <PropertyRef Name="所属院系" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="sunnyEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="管理员" EntityType="Self.管理员" />
+          <EntitySet Name="教师" EntityType="Self.教师" />
+          <EntitySet Name="课程" EntityType="Self.课程" />
+          <EntitySet Name="通知" EntityType="Self.通知" />
+          <EntitySet Name="选课" EntityType="Self.选课" />
+          <EntitySet Name="学生" EntityType="Self.学生" />
+          <EntitySet Name="院系" EntityType="Self.院系" />
+          <EntitySet Name="专业" EntityType="Self.专业" />
+          <EntitySet Name="时间" EntityType="Self.时间" />
+          <AssociationSet Name="FK__通知__公告发布员__56E8E7AB" Association="Self.FK__通知__公告发布员__56E8E7AB">
+            <End Role="管理员" EntitySet="管理员" />
+            <End Role="通知" EntitySet="通知" />
+          </AssociationSet>
+          <AssociationSet Name="FK__教师__院系编号__5E8A0973" Association="Self.FK__教师__院系编号__5E8A0973">
+            <End Role="院系" EntitySet="院系" />
+            <End Role="教师" EntitySet="教师" />
+          </AssociationSet>
+          <AssociationSet Name="FK__课程__授课老师__55F4C372" Association="Self.FK__课程__授课老师__55F4C372">
+            <End Role="教师" EntitySet="教师" />
+            <End Role="课程" EntitySet="课程" />
+          </AssociationSet>
+          <AssociationSet Name="FK__院系__院长__5AB9788F" Association="Self.FK__院系__院长__5AB9788F">
+            <End Role="教师" EntitySet="教师" />
+            <End Role="院系" EntitySet="院系" />
+          </AssociationSet>
+          <AssociationSet Name="FK__课程__院系编号__57DD0BE4" Association="Self.FK__课程__院系编号__57DD0BE4">
+            <End Role="院系" EntitySet="院系" />
+            <End Role="课程" EntitySet="课程" />
+          </AssociationSet>
+          <AssociationSet Name="FK__选课__学生所选课程的编号__5D95E53A" Association="Self.FK__选课__学生所选课程的编号__5D95E53A">
+            <End Role="课程" EntitySet="课程" />
+            <End Role="选课" EntitySet="选课" />
+          </AssociationSet>
+          <AssociationSet Name="FK__选课__选课学生的学号__5CA1C101" Association="Self.FK__选课__选课学生的学号__5CA1C101">
+            <End Role="学生" EntitySet="学生" />
+            <End Role="选课" EntitySet="选课" />
+          </AssociationSet>
+          <AssociationSet Name="FK__学生__学生所属专业__55009F39" Association="Self.FK__学生__学生所属专业__55009F39">
+            <End Role="专业" EntitySet="专业" />
+            <End Role="学生" EntitySet="学生" />
+          </AssociationSet>
+          <AssociationSet Name="FK__专业__所属院系__58D1301D" Association="Self.FK__专业__所属院系__58D1301D">
+            <End Role="院系" EntitySet="院系" />
+            <End Role="专业" EntitySet="专业" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="sunnyModelStoreContainer" CdmEntityContainer="sunnyEntities1">
+          <EntitySetMapping Name="管理员">
+            <EntityTypeMapping TypeName="sunnyModel.管理员">
+              <MappingFragment StoreEntitySet="管理员">
+                <ScalarProperty Name="管理员编号" ColumnName="管理员编号" />
+                <ScalarProperty Name="管理员名" ColumnName="管理员名" />
+                <ScalarProperty Name="管理员密码" ColumnName="管理员密码" />
+                <ScalarProperty Name="备用字段1" ColumnName="备用字段1" />
+                <ScalarProperty Name="备用字段2" ColumnName="备用字段2" />
+                <ScalarProperty Name="备用字段3" ColumnName="备用字段3" />
+                <ScalarProperty Name="备用字段4" ColumnName="备用字段4" />
+                <ScalarProperty Name="备用字段5" ColumnName="备用字段5" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="教师">
+            <EntityTypeMapping TypeName="sunnyModel.教师">
+              <MappingFragment StoreEntitySet="教师">
+                <ScalarProperty Name="教师编号" ColumnName="教师编号" />
+                <ScalarProperty Name="教师姓名" ColumnName="教师姓名" />
+                <ScalarProperty Name="院系编号" ColumnName="院系编号" />
+                <ScalarProperty Name="密码" ColumnName="密码" />
+                <ScalarProperty Name="职称" ColumnName="职称" />
+                <ScalarProperty Name="性别" ColumnName="性别" />
+                <ScalarProperty Name="年龄" ColumnName="年龄" />
+                <ScalarProperty Name="入职时间" ColumnName="入职时间" />
+                <ScalarProperty Name="教师图片" ColumnName="教师图片" />
+                <ScalarProperty Name="备用字段1" ColumnName="备用字段1" />
+                <ScalarProperty Name="备用字段2" ColumnName="备用字段2" />
+                <ScalarProperty Name="备用字段3" ColumnName="备用字段3" />
+                <ScalarProperty Name="备用字段4" ColumnName="备用字段4" />
+                <ScalarProperty Name="备用字段5" ColumnName="备用字段5" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="课程">
+            <EntityTypeMapping TypeName="sunnyModel.课程">
+              <MappingFragment StoreEntitySet="课程">
+                <ScalarProperty Name="课程编号" ColumnName="课程编号" />
+                <ScalarProperty Name="课程名称" ColumnName="课程名称" />
+                <ScalarProperty Name="授课老师" ColumnName="授课老师" />
+                <ScalarProperty Name="学分" ColumnName="学分" />
+                <ScalarProperty Name="课程分类" ColumnName="课程分类" />
+                <ScalarProperty Name="限制人数" ColumnName="限制人数" />
+                <ScalarProperty Name="开课对象" ColumnName="开课对象" />
+                <ScalarProperty Name="上课时间" ColumnName="上课时间" />
+                <ScalarProperty Name="上课地点" ColumnName="上课地点" />
+                <ScalarProperty Name="课程简介" ColumnName="课程简介" />
+                <ScalarProperty Name="课程图片" ColumnName="课程图片" />
+                <ScalarProperty Name="院系编号" ColumnName="院系编号" />
+                <ScalarProperty Name="课时" ColumnName="课时" />
+                <ScalarProperty Name="备用字段1" ColumnName="备用字段1" />
+                <ScalarProperty Name="备用字段2" ColumnName="备用字段2" />
+                <ScalarProperty Name="备用字段3" ColumnName="备用字段3" />
+                <ScalarProperty Name="备用字段4" ColumnName="备用字段4" />
+                <ScalarProperty Name="备用字段5" ColumnName="备用字段5" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="通知">
+            <EntityTypeMapping TypeName="sunnyModel.通知">
+              <MappingFragment StoreEntitySet="通知">
+                <ScalarProperty Name="通知公告编号" ColumnName="通知公告编号" />
+                <ScalarProperty Name="通知公告标题" ColumnName="通知公告标题" />
+                <ScalarProperty Name="通知公告内容" ColumnName="通知公告内容" />
+                <ScalarProperty Name="通知公告发布时间" ColumnName="通知公告发布时间" />
+                <ScalarProperty Name="公告发布员" ColumnName="公告发布员" />
+                <ScalarProperty Name="备用字段1" ColumnName="备用字段1" />
+                <ScalarProperty Name="备用字段2" ColumnName="备用字段2" />
+                <ScalarProperty Name="备用字段3" ColumnName="备用字段3" />
+                <ScalarProperty Name="备用字段4" ColumnName="备用字段4" />
+                <ScalarProperty Name="备用字段5" ColumnName="备用字段5" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="选课">
+            <EntityTypeMapping TypeName="sunnyModel.选课">
+              <MappingFragment StoreEntitySet="选课">
+                <ScalarProperty Name="选课学生的学号" ColumnName="选课学生的学号" />
+                <ScalarProperty Name="学生所选课程的编号" ColumnName="学生所选课程的编号" />
+                <ScalarProperty Name="学生修课的成绩" ColumnName="学生修课的成绩" />
+                <ScalarProperty Name="备用字段1" ColumnName="备用字段1" />
+                <ScalarProperty Name="备用字段2" ColumnName="备用字段2" />
+                <ScalarProperty Name="备用字段3" ColumnName="备用字段3" />
+                <ScalarProperty Name="备用字段4" ColumnName="备用字段4" />
+                <ScalarProperty Name="备用字段5" ColumnName="备用字段5" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="学生">
+            <EntityTypeMapping TypeName="sunnyModel.学生">
+              <MappingFragment StoreEntitySet="学生">
+                <ScalarProperty Name="学生学号" ColumnName="学生学号" />
+                <ScalarProperty Name="学生姓名" ColumnName="学生姓名" />
+                <ScalarProperty Name="学生性别" ColumnName="学生性别" />
+                <ScalarProperty Name="学生年龄" ColumnName="学生年龄" />
+                <ScalarProperty Name="学生年级" ColumnName="学生年级" />
+                <ScalarProperty Name="学生所属专业" ColumnName="学生所属专业" />
+                <ScalarProperty Name="学生登录密码" ColumnName="学生登录密码" />
+                <ScalarProperty Name="学生照片" ColumnName="学生照片" />
+                <ScalarProperty Name="身份证号" ColumnName="身份证号" />
+                <ScalarProperty Name="学生照片1" ColumnName="学生照片1" />
+                <ScalarProperty Name="学生照片2" ColumnName="学生照片2" />
+                <ScalarProperty Name="学生照片3" ColumnName="学生照片3" />
+                <ScalarProperty Name="学生照片4" ColumnName="学生照片4" />
+                <ScalarProperty Name="学生照片5" ColumnName="学生照片5" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="院系">
+            <EntityTypeMapping TypeName="sunnyModel.院系">
+              <MappingFragment StoreEntitySet="院系">
+                <ScalarProperty Name="院系编号" ColumnName="院系编号" />
+                <ScalarProperty Name="院系名" ColumnName="院系名" />
+                <ScalarProperty Name="院长" ColumnName="院长" />
+                <ScalarProperty Name="备用字段1" ColumnName="备用字段1" />
+                <ScalarProperty Name="备用字段2" ColumnName="备用字段2" />
+                <ScalarProperty Name="备用字段3" ColumnName="备用字段3" />
+                <ScalarProperty Name="备用字段4" ColumnName="备用字段4" />
+                <ScalarProperty Name="备用字段5" ColumnName="备用字段5" />
+                <ScalarProperty Name="是否有效" ColumnName="是否有效" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="专业">
+            <EntityTypeMapping TypeName="sunnyModel.专业">
+              <MappingFragment StoreEntitySet="专业">
+                <ScalarProperty Name="专业编号" ColumnName="专业编号" />
+                <ScalarProperty Name="专业名称" ColumnName="专业名称" />
+                <ScalarProperty Name="所属院系" ColumnName="所属院系" />
+                <ScalarProperty Name="备用字段1" ColumnName="备用字段1" />
+                <ScalarProperty Name="备用字段2" ColumnName="备用字段2" />
+                <ScalarProperty Name="备用字段3" ColumnName="备用字段3" />
+                <ScalarProperty Name="备用字段4" ColumnName="备用字段4" />
+                <ScalarProperty Name="备用字段5" ColumnName="备用字段5" />
+                <ScalarProperty Name="是否有效" ColumnName="是否有效" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="时间">
+            <EntityTypeMapping TypeName="sunnyModel.时间">
+              <MappingFragment StoreEntitySet="时间">
+                <ScalarProperty Name="各类开发时间编号" ColumnName="各类开发时间编号" />
+                <ScalarProperty Name="时间名" ColumnName="时间名" />
+                <ScalarProperty Name="类名" ColumnName="类名" />
+                <ScalarProperty Name="开始时间" ColumnName="开始时间" />
+                <ScalarProperty Name="结束时间" ColumnName="结束时间" />
+                <ScalarProperty Name="备用字段1" ColumnName="备用字段1" />
+                <ScalarProperty Name="备用字段2" ColumnName="备用字段2" />
+                <ScalarProperty Name="备用字段3" ColumnName="备用字段3" />
+                <ScalarProperty Name="备用字段4" ColumnName="备用字段4" />
+                <ScalarProperty Name="备用字段5" ColumnName="备用字段5" />
+                <ScalarProperty Name="是否有效字段" ColumnName="是否有效字段" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

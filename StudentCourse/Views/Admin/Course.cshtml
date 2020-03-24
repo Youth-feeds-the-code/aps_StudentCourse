@@ -1,0 +1,97 @@
+﻿@using StudentCourse.Models
+@model StudentCourse.Models.课程
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Course</title>
+
+    <script type="text/javascript" src="@Url.Content("~/js/jquery-validation-1.15.0/lib/jquery-1.11.1.js")"></script>
+
+    <style type="text/css">
+        #tbList, #tb2List {
+            border: 1px solid #0094ff;
+            width: 600px;
+            margin: 10px auto;
+            border-collapse: collapse;
+        }
+
+            #tbList th, td {
+                border: 1px solid #0094ff;
+                padding: 5px;
+            }
+    </style>
+
+    <script type="text/javascript">
+        function del(id) {
+            if (confirm("您确定要删除？亲~")) {
+                window.location = "/Course/del/" + id;
+            }
+        }
+
+        function add() {
+            window.location = "/Course/add/";
+        }
+
+        function selectBysemester() {
+            var ddl = document.getElementById("ddList");
+            var text = ddl.options[ddl.options.selectedIndex].text;
+            window.location = "/Admin/Course/" + text;         
+        }
+    </script>
+
+</head>
+<body>
+
+    <!--学期 下拉框-->
+    
+    @Html.DropDownListFor(a => a.备用字段1, ViewBag.semesterList as IEnumerable<SelectListItem>, new { id = "ddList", onchange = "selectBysemester()" })
+
+
+    <table id="tb2List">
+        <!--查询-->
+    </table>
+
+
+    <input name="submit" type="button" value="添加" onclick="add()" />
+    <table id="tbList">
+        <tr>
+            <th>课程号</th>
+            <th>课程名</th>
+            <th>授课老师</th>
+            <th>上课时间</th>
+            <th>上课地点</th>
+            <th>开课对象</th>
+            <th>限制人数</th>
+            <th>课时</th>
+            <th>学分</th>
+            <th>操作</th>
+        </tr>
+        <!-- 遍历Action方法 设置给 Viewdata 的集合数据，生成HTML代码-->
+        @foreach (课程 a in ViewData["DataList"] as List<课程>)
+        {
+            <tr>
+                <td>@a.课程编号</td>
+                <td>@a.课程名称</td>
+                <td>@a.教师.教师姓名</td>
+                <td>@a.上课时间</td>
+                <td>@a.上课地点</td>
+                <td>@a.开课对象</td>
+                <td>@a.限制人数</td>
+                <td>@a.课时</td>
+                <td>@a.学分</td>
+                <td colspan="3">
+                    <a href="javascript:del(@a.课程编号)">删除</a>
+                    <a href="/Course/modify/@a.课程编号">修改</a>
+                </td>
+            </tr>
+        }
+    </table>
+</body>
+</html>

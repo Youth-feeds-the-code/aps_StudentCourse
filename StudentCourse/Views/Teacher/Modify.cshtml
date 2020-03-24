@@ -1,0 +1,63 @@
+﻿@model StudentCourse.Models.教师
+<!--指定页面Model 属性 的类型-->
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>修改</title>
+
+    <style type="text/css">
+        #tbList {
+            border: 1px solid #0094ff;
+            width: 600px;
+            margin: 10px auto;
+            border-collapse: collapse;
+        }
+
+            #tbList th, td {
+                border: 1px solid #0094ff;
+                padding: 10px;
+            }
+    </style>
+
+</head>
+
+
+
+<body>
+    @using (Html.BeginForm("Modify", "Teacher", FormMethod.Post))
+    {
+        <table id="tbList">
+        <tr>
+            <td colspan="2">修改 @Html.HiddenFor(a=> a.教师编号)</td>
+        </tr>
+        <tr>
+            <td>姓名：</td>
+            @*<td>@Html.TextBox("txtName", (object)Model.教师姓名)</td>*@
+
+            <!--使用HtmlHelper的强类型方法 直接 从model 中 根据 教师姓名 属性生成文本框-->
+            <td>@Html.TextBoxFor(a => a.教师姓名)</td>
+        </tr>
+        <tr>
+            <td>性别：</td>
+            @*<td>@Html.TextBox("txtName", (object)Model.教师姓名)</td>*@
+
+            <!--使用HtmlHelper的强类型方法 生成下拉框，并自动根据 model 属性里的性别 值，设置 下拉框的默认选中项-->
+            <td>@Html.DropDownListFor(a=>a.性别, ViewBag.SexList as IEnumerable<SelectListItem>)</td>
+        </tr>
+        <tr>
+            <td>院系：</td>
+            <td>@Html.DropDownListFor(a => a.院系编号,ViewBag.DeptList as IEnumerable<SelectListItem>)</td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="确认修改" /> @Html.ActionLink("返回","About","Home")</td>
+        </tr>
+        </table>
+    }
+</body>
+</html>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="aa2887091d83416fa38a7d6dd4209b99" Name="Diagram1">
+        <EntityTypeShape EntityType="sunnyModel.管理员" Width="1.5" PointX="7.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="sunnyModel.教师" Width="1.5" PointX="3" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="sunnyModel.课程" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="sunnyModel.通知" Width="1.5" PointX="10" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="sunnyModel.选课" Width="1.5" PointX="7.5" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="sunnyModel.学生" Width="1.5" PointX="5.25" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="sunnyModel.院系" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="sunnyModel.专业" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="sunnyModel.时间" Width="1.5" PointX="9.75" PointY="1.25" IsExpanded="true" />
+        <AssociationConnector Association="sunnyModel.FK__通知__公告发布员__56E8E7AB" ManuallyRouted="false" />
+        <AssociationConnector Association="sunnyModel.FK__教师__院系编号__5E8A0973" ManuallyRouted="false" />
+        <AssociationConnector Association="sunnyModel.FK__课程__授课老师__55F4C372" ManuallyRouted="false" />
+        <AssociationConnector Association="sunnyModel.FK__院系__院长__5AB9788F" ManuallyRouted="false" />
+        <AssociationConnector Association="sunnyModel.FK__课程__院系编号__57DD0BE4" ManuallyRouted="false" />
+        <AssociationConnector Association="sunnyModel.FK__选课__学生所选课程的编号__5D95E53A" ManuallyRouted="false" />
+        <AssociationConnector Association="sunnyModel.FK__选课__选课学生的学号__5CA1C101" ManuallyRouted="false" />
+        <AssociationConnector Association="sunnyModel.FK__学生__学生所属专业__55009F39" ManuallyRouted="false" />
+        <AssociationConnector Association="sunnyModel.FK__专业__所属院系__58D1301D" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
