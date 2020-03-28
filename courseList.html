@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>课程列表</title>
+  <link rel="stylesheet" href="css/courseList.css" type="text/css">
+  <link rel="stylesheet" href="css/common/bootstrap.min.css" type="text/css">
+  <link rel="stylesheet" href="css/bootstrap-select.min.css" type="text/css">
+  <link rel="stylesheet" href="css/bootstrap-table.min.css" type="text/css">
+  <!--<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" type="text/css">-->
+  <link rel="stylesheet" href="css/content/mynav.css" type="text/css">
+  <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap-select.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap-table.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap-table-zh-CN.min.js"></script>
+  <!--<script type="text/javascript" src="js/moment-with-locales.min.js"></script>-->
+  <!--<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>-->
+
+  <style type="text/css">
+    a.page-link {
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="courseNav">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">选课列表 <span class="sr-only">(current)</span></a></li>
+            <li><a href="#">课表查询</a></li>
+            <li><a href="#">查询历史选课记录</a></li>
+            <!--<li class="dropdown">-->
+              <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">下拉查询条件 <span class="caret"></span></a>-->
+              <!--<ul class="dropdown-menu">-->
+                <!--<li><a href="#">a</a></li>-->
+                <!--<li><a href="#">a</a></li>-->
+                <!--<li><a href="#">a</a></li>-->
+                <!--<li role="separator" class="divider"></li>-->
+                <!--<li><a href="#">b</a></li>-->
+                <!--<li role="separator" class="divider"></li>-->
+                <!--<li><a href="#">c</a></li>-->
+              <!--</ul>-->
+            <!--</li>-->
+          </ul>
+
+          <form class="navbar-form navbar-left">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="搜索">
+            </div>
+            <button type="submit" class="btn btn-default">查询</button>
+          </form>
+
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="main.html">注销</a></li>
+          </ul>
+
+          <form class="navbar-form navbar-right">
+            <select id="lunch" class="selectpicker" title="请选择相关查询条件">
+              <option value="">条件1</option>
+              <option value="">条件2</option>
+            </select>
+          </form>
+
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+  </div>
+
+<!--<div class="contentTop">-->
+  <!--<div class="container">-->
+    <!--<div class="row">-->
+      <!--<div class='col-md-2'>-->
+        <!--<div class="form-group">-->
+          <!--<label>选择日期：</label>-->
+          <!--&lt;!&ndash;指定 date标记&ndash;&gt;-->
+          <!--<div class='input-group date' id='dateTimePicker'>-->
+            <!--<input type='text' class="form-control" />-->
+            <!--<span class="input-group-addon">-->
+            <!--<span class="glyphicon glyphicon-calendar"></span>-->
+          <!--</span>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+
+<div class="content">
+  <div class="courseInfo">
+    <table class="table" id="courseTable">
+
+      <!--测试数据-->
+      <!--<tr>-->
+        <!--<td>1</td>-->
+        <!--<td>大学物理</td>-->
+        <!--<td>刘波</td>-->
+        <!--<td>周一</td>-->
+        <!--<td>教四</td>-->
+        <!--<td>大一新生</td>-->
+        <!--<td>100</td>-->
+        <!--<td>32</td>-->
+        <!--<td>4</td>-->
+        <!--<td>-->
+          <!--<a href="">hhh</a>-->
+          <!--<a href="">fff</a>-->
+        <!--</td>-->
+      <!--</tr>-->
+    </table>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $(function () {
+    //日历
+    // $('#dateTimePicker').datetimepicker({
+    //   format: 'yyyy-mm-dd',
+    //   minView: "month",
+    //   locale: moment.locale('zh-cn'),
+    //   autoclose: true
+    // });
+
+    $('#courseTable').bootstrapTable({
+      url: '',
+      cache: false,
+      pagination: true,
+      pageSize: 10,
+      pageList: [10, 15, 20, 50],
+      sortable: true,
+      singleSelect: true,
+      clickToSelect: true,
+      columns: [{
+        field: 'courseID',
+        title: '课程号',
+        sortable: true,
+      }, {
+        field: 'courseName',
+        title: '课程名'
+      }, {
+        field: 'courseTea',
+        title: '授课老师'
+      }, {
+        field: 'courseTime',
+        title: '上课时间'
+      }, {
+        field: 'coursePlace',
+        title: '上课地点'
+      },{
+        field: 'courseObj',
+        title: '开课对象'
+      },{
+        field: 'courseMaxNum',
+        title: '限制人数',
+        sortable: true,
+      },{
+        field: 'courseTotalTime',
+        title: '课时',
+        sortable: true,
+      },{
+        field: 'courseCredit',
+        title: '学分',
+        sortable: true,
+      },{
+        field: 'operate',
+        title: '操作',
+        formatter: aFormatter
+      }]
+
+      
+    });
+
+    function aFormatter(value, row, index) {
+      console.log('条用了')
+      let content = "<a href='courseDetail.html?courseID=" + row["courseID"] + "'>查看详情</a> " +
+        "<a href='#"  + row["courseID"]+"'>选课</a>"
+      return content;
+    }
+
+
+
+  });
+</script>
+</body>
+</html>

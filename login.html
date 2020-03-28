@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>学生选课系统-登录</title>
+
+  <link href="css/common/bootstrap.min.css" type="text/css" rel="Stylesheet"/>
+  <link href="css/login/font-awesome.min.css" type="text/css" rel="stylesheet">
+  <link href="css/login/general.css" type="text/css" rel="stylesheet">
+  <link href="css/login/form.css" type="text/css" rel="stylesheet">
+
+  <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript" src="js/jquery.validate.min.js"></script>
+
+  <style type="text/css">
+    .header {
+      width: auto;
+      height: 80px;
+      margin: 20px 0;
+      font-size: 24px;
+      font-weight: bold;
+      color: #bbb;
+    }
+
+    .content {
+      background-image: url("image/login/login_bg.jpg");
+      width: auto;
+      height: 498px;
+      position: relative;
+    }
+
+    .content .container{
+      padding-left: 600px;
+    }
+
+    .content .row {
+      margin-right: -190px;
+    }
+
+    .footer {
+      display: flex;
+      font-size: 14px;
+      padding: 10px 200px;
+    }
+    .footer .instructions ,.helpTel{
+      flex: 1;
+    }
+    .footer h4 {
+      color: #2d6644;
+      font-weight: bold;
+      display: inline-block;
+    }
+    .footer img {
+      height: 30px;
+      width: 30px;
+    }
+  </style>
+
+</head>
+<body>
+
+  <div class="header">
+    <img src="image/login/logo.png" alt="logo">
+    <span>学生选课管理系统</span>
+  </div>
+
+  <div class="content">
+    <div class="form-bg">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-offset-3 col-md-6">
+
+            <form class="form-horizontal" id="signupForm" method="post" action="">
+              <span class="heading" style="color: #2d6644">用户登录</span>
+
+              <div class="form-group">
+                <input type="text" class="form-control" id="username" name="username" placeholder="用户名">
+                <i class="fa fa-user"></i>
+              </div>
+
+              <div class="form-group help">
+                <input type="password" class="form-control" id="password" name="password" placeholder="密码">
+                <i class="fa fa-lock"></i>
+                <a href="#" class="fa fa-question-circle"></a>
+              </div>
+
+              <div class="form-group">
+                <div class="col-md-9" style="padding: 0"><input type="text" class="form-control" id="valiCode" name="valiCode" placeholder="输入验证码" /></div>
+                <img id="valiCodeImg" style="cursor: pointer;" src="" alt="验证码" onclick="refreshimg()" />
+              </div>
+
+
+              <div class="form-group">
+                <div class="main-checkbox">
+                  <input type="checkbox" value="None" id="remember" name="check"/>
+                  <label for="remember"></label>
+                </div>
+                <span class="text">记住我</span>
+                <button type="submit" class="btn btn-default">登录</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="instructions">
+      <h4>使用说明书</h4>
+      <img src="image/login/instructions.png" alt="">
+      <p>
+        1.学生选课管理系统是我校师生进行课程相关查询的智慧平台。<br>
+        2.推荐使用谷歌（Chrome）或火狐（FireFox）浏览器登录,若<br>
+        使用360浏览器兼容模式请将IE浏览器升级至IE10及以上版本
+      </p>
+    </div>
+
+    <div class="helpTel">
+      <h4>帮助电话</h4>
+      <img src="image/login/phone.png" alt="">
+      <p>
+        1.登录账号为个人职工号或学号,初始密码为身份证后六位<br>
+        2.如需进入OA系统，请使用IE10及以上版本浏览器登录智慧服务中心。<br>
+        3.统一身份认证、智慧服务中心,联系人：曾诚老师 123456789
+      </p>
+
+    </div>
+  </div>
+
+  <script type="text/javascript">
+  
+    $.validator.setDefaults( {
+      submitHandler: function () {
+        form.submit();
+      }
+    } );
+  
+    $( document ).ready( function () {
+  
+      $( "#signupForm" ).validate( {
+        rules: {
+          username: {
+            required: true,
+          },
+          password: {
+            required: true,
+          },
+          valiCode: {
+            required: true
+          }
+        },
+        messages: {
+          username: {
+            required: "请输入用户名",
+          },
+          password: {
+            required: "请输入密码",
+          },
+          valiCode: {
+            required: "请输入验证码"
+          }
+        },
+        errorElement: "em",
+        errorPlacement: function ( error, element ) {
+          // Add the `help-block` class to the error element
+          error.addClass( "help-block" );
+  
+          if ( element.prop( "type" ) === "checkbox" ) {
+            error.insertAfter( element.parent( "label" ) );
+          } else {
+            error.insertAfter( element );
+          }
+        },
+        highlight: function ( element, errorClass, validClass ) {
+          $( element ).parents( ".form-group" ).addClass( "has-error" ).removeClass( "has-success" );
+        },
+        unhighlight: function (element, errorClass, validClass) {
+          $( element ).parents( ".form-group" ).addClass( "has-success" ).removeClass( "has-error" );
+        }
+      } );
+    } );
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.contentTop .container{
+  width: 100%;
+  padding: 0 50px;
+}
+
+.content{
+    margin: 0;
+    padding: 0 30px;
+    width: 100%;
+    text-align: center;
+}
+
+.content th {
+  text-align: center;
+}
+
+.courseInfo a {
+  margin-right: 20px;
+  text-decoration: none;
+}
+
+
