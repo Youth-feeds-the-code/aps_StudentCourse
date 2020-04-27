@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="css/bootstrap-select.min.css" type="text/css">
   <link rel="stylesheet" href="css/content/mynav.css" type="text/css">
   <link rel="stylesheet" href="css/fileinput.min.css" type="text/css">
+  <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" type="text/css">
   <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/bootstrap-table.min.js"></script>
@@ -17,7 +18,8 @@
   <script type="text/javascript" src="js/jquery.validate.min.js"></script>
   <script type="text/javascript" src="js/fileinput.min.js"></script>
   <script type="text/javascript" src="js/locales/zh.js"></script>
-  <script type="text/javascript" src="js/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="js/moment-with-locales.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
   <style type="text/css">
     .modal-backdrop,.in {
       height: 100vh;
@@ -29,6 +31,13 @@
     a.page-link {
       margin: 0;
     }
+    .courseDetailView {
+      padding: 0 250px;
+    }
+    .courseDetailView input{
+      border: 0;
+      background-color: transparent;
+    }
   </style>
 </head>
 <body>
@@ -38,10 +47,10 @@
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="#">课程管理 <span class="sr-only">(current)</span></a></li>
-          <li><a href="#">学生管理</a></li>
-          <li><a href="#">教师管理</a></li>
+        <ul class="nav navbar-nav jump">
+          <li role="presentation" class="active"><a href="admin.html?type=course">课程管理 <span class="sr-only">(current)</span></a></li>
+          <li role="presentation"><a href="admin.html?type=stu">学生管理</a></li>
+          <li role="presentation"><a href="admin.html?type=tea">教师管理</a></li>
         </ul>
 
         <!--<form class="navbar-form navbar-left">-->
@@ -75,22 +84,47 @@
     <button class="btn" id="btnDel"><span class="glyphicon glyphicon-remove"></span> 删除</button>
   </div>
 
-  <!--课程表-->
+  <!--表格信息-->
   <div class="content">
-    <div class="courseInfo">
-      <table id="courseTable">
+    <div class="information">
+      <table id="informationTable">
         <!--测试数据-->
-        <!--<tr>-->
+        <tr>
+          <!--课程-->
           <!--<td>1</td>-->
           <!--<td>大学物理</td>-->
-          <!--<td>刘波</td>-->
-          <!--<td>周一</td>-->
-          <!--<td>教四</td>-->
-          <!--<td>大一新生</td>-->
-          <!--<td>100</td>-->
+          <!--<td>必修课</td>-->
+          <!--<td>物电学院</td>-->
           <!--<td>32</td>-->
-          <!--<td>4</td>-->
-        <!--</tr>-->
+          <!--<td>3</td>-->
+          <!--<td><img src="./image/course/大学物理.jpg" alt="" style="width: 50px;height: 50px"></td>-->
+          <!--<td>物理物理物理物理物理物理物理物理物理物理物理物理物理物理物理物理物理物理物理物理物理物理物理</td>-->
+
+          <!--学生-->
+          <!--<td>201722111920000</td>-->
+          <!--<td>无名氏</td>-->
+          <!--<td>男</td>-->
+          <!--<td>20</td>-->
+          <!--<td>计算机与信息工程学院</td>-->
+          <!--<td>软件工程</td>-->
+          <!--<td>汉族</td>-->
+          <!--<td>中共党员</td>-->
+          <!--<td><img src="./image/course/大学物理.jpg" alt="" style="width: 50px;height: 50px"></td>-->
+          <!--<td>无名氏无名氏无名氏无名氏无名氏无名氏无名氏无名氏无名氏无名氏无名氏无名氏无名氏无名氏</td>-->
+
+          <!--教师-->
+          <td>201722111920000</td>
+          <td>曾诚</td>
+          <td>男</td>
+          <td>45</td>
+          <td>计算机与信息工程学院</td>
+          <td>2000-01-01</td>
+          <td>教授</td>
+          <td>汉族</td>
+          <td>中共党员</td>
+          <td><img src="./image/course/大学物理.jpg" alt="" style="width: 50px;height: 50px"></td>
+          <td>傻逼傻逼傻逼傻逼傻逼傻逼傻逼傻逼傻逼傻逼傻逼傻逼傻逼傻逼傻逼傻逼傻逼傻逼傻逼傻逼</td>
+        </tr>
       </table>
     </div>
   </div>
@@ -132,7 +166,7 @@
           <!--添加课程信息-->
           <div class="container">
             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
-              <form name="courseInfo" id="courseInfo" method="post" enctype="multipart/form-data" action="" onsubmit="return datacheck();">
+              <form name="courseInfo" id="courseInfo" method="post" enctype="multipart/form-data" action="">
 
                 <div class="form-group col-md-6 col-sm-6">
                   <label for="courseID" class="col-sm-4 control-label">课程编号</label>
@@ -148,47 +182,22 @@
                   </div>
                 </div>
 
-                <div class="form-group col-md-6 col-sm-6">
-                  <label class="col-sm-4 control-label">授课老师</label>
-                  <div class="col-sm-8">
-                    <select class="form-control" name="courseTea" id="courseTea">
-                      <option value="">请选择授课老师</option>
-                      <option value="">还是直接用dropdownlist比较好</option>
-                    </select>
-                  </div>
-                </div>
 
-                <div class="form-group col-md-6 col-sm-6">
-                  <label class="col-sm-4 control-label">院系编号</label>
-                  <div class="col-sm-8">
-                    <select class="form-control" name="courseInstitute" id="courseInstitute">
-                      <option value="">请选择院系编号</option>
-                      <option value="">还是直接用dropdownlist比较好</option>
-                    </select>
-                  </div>
-                </div>
-
-
-                <div class="form-group col-md-6 col-sm-6">
-                  <label class="col-sm-4 control-label">课程学分</label>
-                  <div class="col-sm-8">
-                    <select class="form-control" name="courseCredit">
-                      <option value="">请选择课程学分</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                    </select>
-                  </div>
-                </div>
-
+                <!--<div class="form-group col-md-6 col-sm-6">-->
+                  <!--<label class="col-sm-4 control-label">授课老师</label>-->
+                  <!--<div class="col-sm-8">-->
+                    <!--<select class="form-control" name="courseTea" id="courseTea">-->
+                      <!--<option value="">请选择授课老师</option>-->
+                      <!--<option value="">还是直接用dropdownlist比较好</option>-->
+                    <!--</select>-->
+                  <!--</div>-->
+                <!--</div>-->
 
                 <div class="form-group col-md-6 col-sm-6 ">
-                  <label class="col-sm-4 control-label">课程分类</label>
+                  <label class="col-sm-4 control-label">课程类型</label>
                   <div class="col-sm-8">
-                    <select class="form-control" name="courseType">
+                    <select class="form-control" name="courseType" id="courseType">
+                      <option value="">请选择课程类型</option>
                       <option value="必修课">必修课</option>
                       <option value="公选课">公选课</option>
                       <option value="专选课">专选课</option>
@@ -196,70 +205,103 @@
                   </div>
                 </div>
 
-
                 <div class="form-group col-md-6 col-sm-6">
-                  <label for="courseMaxMun" class="col-sm-4 control-label">限选人数</label>
+                  <label class="col-sm-4 control-label">开设院系</label>
                   <div class="col-sm-8">
-                    <input type="text" name="courseMaxMun" class="form-control" id="courseMaxMun" placeholder="限选人数">
-                  </div>
-                </div>
-
-
-                <div class="form-group col-md-6 col-sm-6">
-                  <label for="courseObj" class="col-sm-4 control-label">开课对象</label>
-                  <div class="col-sm-8">
-                    <input type="text" name="courseObj" id="courseObj" class="form-control" placeholder="开课对象">
-                  </div>
-                </div>
-
-
-                <div class="form-group col-md-6 col-sm-6">
-                  <label for="courseTime" class="col-sm-4 control-label">上课时间</label>
-                  <div class="col-sm-8">
-                    <input type="tel" name="courseTime" id="courseTime" required="required" class="form-control" placeholder="上课时间">
-                  </div>
-                </div>
-
-
-                <div class="form-group col-md-6 col-sm-6">
-                  <label for="coursePlace" class="col-sm-4 control-label">上课地点</label>
-                  <div class="col-sm-8">
-                    <input name="coursePlace" type="email" required="required" class="form-control" id="coursePlace" placeholder="上课地点">
+                    <select class="form-control" name="courseInstitute" id="courseInstitute">
+                      <option value="">请选择院系</option>
+                      <option value="物电学院">物电学院</option>
+                    </select>
                   </div>
                 </div>
 
 
                 <div class="form-group col-md-6 col-sm-6 hidden-xs">
-                  <label for="courseTotalTime" class="col-sm-4 control-label">总课时长</label>
+                  <label class="col-sm-4 control-label">课程学时</label>
                   <div class="col-sm-8">
-                    <input name="courseTotalTime" type="text" class="form-control" id="courseTotalTime" placeholder="总课时长">
-                  </div>
-                </div>
-
-
-                <div class="form-group col-md-6 col-sm-6 ">
-                  <label class="col-sm-4 control-label">课程学期</label>
-                  <div class="col-sm-8">
-                    <select class="form-control" name="courseType">
-                      <option value="">请选择课程学期</option>
-                      <option value="2019-2020-1">2019-2020-1</option>
-                      <option value="2019-2020-2">2019-2020-2</option>
-                      <option value=""></option>
+                    <select class="form-control" id="courseTotalTime" name="courseTotalTime">
+                      <option value="">请选择课程学时</option>
+                      <option value="4">4</option>
+                      <option value="8">8</option>
+                      <option value="16">16</option>
+                      <option value="32">32</option>
+                      <option value="48">48</option>
+                      <option value="64">64</option>
                     </select>
                   </div>
                 </div>
 
+                <div class="form-group col-md-6 col-sm-6">
+                  <label class="col-sm-4 control-label">课程学分</label>
+                  <div class="col-sm-8">
+                    <select class="form-control" id="courseCredit" name="courseCredit">
+                      <option value="">请选择课程学分</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="3.5">3.5</option>
+                      <option value="5">4</option>
+                      <option value="6">5</option>
+                    </select>
+                  </div>
+                </div>
+
+
+                <!--<div class="form-group col-md-6 col-sm-6">-->
+                  <!--<label for="courseMaxMun" class="col-sm-4 control-label">限选人数</label>-->
+                  <!--<div class="col-sm-8">-->
+                    <!--<input type="text" name="courseMaxMun" class="form-control" id="courseMaxMun" placeholder="限选人数">-->
+                  <!--</div>-->
+                <!--</div>-->
+
+
+                <!--<div class="form-group col-md-6 col-sm-6">-->
+                  <!--<label for="courseObj" class="col-sm-4 control-label">开课对象</label>-->
+                  <!--<div class="col-sm-8">-->
+                    <!--<input type="text" name="courseObj" id="courseObj" class="form-control" placeholder="开课对象">-->
+                  <!--</div>-->
+                <!--</div>-->
+
+
+                <!--<div class="form-group col-md-6 col-sm-6">-->
+                  <!--<label for="courseTime" class="col-sm-4 control-label">上课时间</label>-->
+                  <!--<div class="col-sm-8">-->
+                    <!--<input type="tel" name="courseTime" id="courseTime" required="required" class="form-control" placeholder="上课时间">-->
+                  <!--</div>-->
+                <!--</div>-->
+
+
+                <!--<div class="form-group col-md-6 col-sm-6">-->
+                  <!--<label for="coursePlace" class="col-sm-4 control-label">上课地点</label>-->
+                  <!--<div class="col-sm-8">-->
+                    <!--<input name="coursePlace" type="email" required="required" class="form-control" id="coursePlace" placeholder="上课地点">-->
+                  <!--</div>-->
+                <!--</div>-->
+
+
+                <!--<div class="form-group col-md-6 col-sm-6 ">-->
+                  <!--<label class="col-sm-4 control-label">课程学期</label>-->
+                  <!--<div class="col-sm-8">-->
+                    <!--<select class="form-control" name="courseType">-->
+                      <!--<option value="">请选择课程学期</option>-->
+                      <!--<option value="2019-2020-1">2019-2020-1</option>-->
+                      <!--<option value="2019-2020-2">2019-2020-2</option>-->
+                      <!--<option value=""></option>-->
+                    <!--</select>-->
+                  <!--</div>-->
+                <!--</div>-->
+
                 <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <label for="courseTotalTime" class="col-sm-2 control-label">课程图片</label>
-                  <div class="col-sm-10">
-                    <input name="courseImg" type="file" class="form-control file-loading" id="courseImg" placeholder="课程图片">
+                  <label for="courseImg" class="col-sm-2 control-label">课程图片</label>
+                  <div class="col-sm-10" style="padding: 0 10px 0">
+                    <input name="courseImg" type="file" class="form-control file-loading" id="courseImg">
                   </div>
                 </div>
 
                 <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <label for="courseIntro" class="col-sm-2 control-label">课程简介</label>
-                  <div class="col-sm-10">
-                    <textarea class="form-control" rows="3" name="courseIntro" id="courseIntro" required="required"></textarea>
+                  <div class="col-sm-10" style="padding: 0 10px 0">
+                    <textarea class="form-control" rows="3" name="courseIntro" id="courseIntro"></textarea>
                   </div>
                 </div>
 
@@ -286,63 +328,712 @@
     </div>
   </div>
 
+  <!--添加学生模态窗口-->
+  <div class="modal fade" id="stuModal" tabindex="-1" role="dialog" aria-labelledby="添加学生">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="stuModalLabel">添加学生</h4>
+        </div>
+        <div class="modal-body">
+          <!--添加学生信息-->
+          <div class="container">
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+              <form name=stuInfo" id="stuInfo" method="post" enctype="multipart/form-data" action="">
 
+                <div class="form-group col-md-6 col-sm-6">
+                  <label for="stuID" class="col-sm-4 control-label">学生学号</label>
+                  <div class="col-sm-8">
+                    <input type="text" name="stuID" class="form-control" id="stuID" placeholder="学生学号">
+                  </div>
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6">
+                  <label for="stuName" class="col-sm-4 control-label">学生姓名</label>
+                  <div class="col-sm-8">
+                    <input type="text" name="stuName" class="form-control" id="stuName" placeholder="学生姓名">
+                  </div>
+                </div>
+
+
+                <div class="form-group col-md-6 col-sm-6 ">
+                  <label class="col-sm-4 control-label">学生性别</label>
+                  <div class="col-sm-8">
+                    <select class="form-control" name="stuSex" id="stuSex">
+                      <option value="">请选择学生性别</option>
+                      <option value="男">男</option>
+                      <option value="女">女</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6 ">
+                  <label class="col-sm-4 control-label">学生年龄</label>
+                  <div class="col-sm-8">
+                    <input type="text" name="stuAge" class="form-control" id="stuAge" placeholder="学生年龄">
+                  </div>
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6">
+                  <label class="col-sm-4 control-label">所在院系</label>
+                  <div class="col-sm-8">
+                    <select class="form-control" name="stuInstitute" id="stuInstitute">
+                      <option value="">请选择院系</option>
+                      <option value="计算机与信息工程学院">计算机与信息工程学院</option>
+                    </select>
+                  </div>
+                </div>
+
+
+                <div class="form-group col-md-6 col-sm-6 hidden-xs">
+                  <label class="col-sm-4 control-label">所在专业</label>
+                  <div class="col-sm-8">
+                    <select id="stuProfessional" class="form-control" name="stuProfessional">
+                      <option value="">请选择所在专业</option>
+                      <option value="软件工程">软件工程</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6">
+                  <label class="col-sm-4 control-label">民族</label>
+                  <div class="col-sm-8">
+                    <select class="form-control" id="stuNation" name="stuNation">
+                      <option value="">请选择民族</option>
+                      <option value="汉族">汉族</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6">
+                  <label class="col-sm-4 control-label">政治面貌</label>
+                  <div class="col-sm-8">
+                    <select class="form-control" id="stuPoliticalStatus" name="stuPoliticalStatus">
+                      <option value="">请选择政治面貌</option>
+                      <option value="中共党员">中共党员</option>
+                    </select>
+                  </div>
+                </div>
+
+
+                <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <label class="col-sm-2 control-label">学生照片</label>
+                  <div class="col-sm-10" style="padding: 0 10px 0">
+                    <input name="stuImg" type="file" class="form-control file-loading" id="stuImg" placeholder="学生图片">
+                  </div>
+                </div>
+
+                <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <label for="stuNotes" class="col-sm-2 control-label">备注</label>
+                  <div class="col-sm-10" style="padding: 0 10px 0">
+                    <textarea class="form-control" rows="3" name="stuNotes" id="stuNotes"></textarea>
+                  </div>
+                </div>
+
+
+                <div class="form-group">
+                  <div class="col-sm-6">
+                    <button type="submit" name="submit" class="btn btn-primary pull-right">提交</button>
+                  </div>
+                  <div class="col-sm-6">
+                    <button name="reset" type="reset" class="btn btn-default pull-left">重置</button>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+
+        </div>
+        <!--<div class="modal-footer">-->
+        <!--&lt;!&ndash;<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>&ndash;&gt;-->
+        <!--&lt;!&ndash;<button type="button" class="btn btn-primary">保存</button>&ndash;&gt;-->
+        <!--</div>-->
+      </div>
+    </div>
+  </div>
+
+  <!--添加教师模态窗口-->
+  <div class="modal fade" id="teaModal" tabindex="-1" role="dialog" aria-labelledby="添加教师">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="teaModalLabel">添加教师</h4>
+        </div>
+        <div class="modal-body">
+          <!--添加教师信息-->
+          <div class="container">
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+              <form name="teaInfo" id="teaInfo" method="post" enctype="multipart/form-data" action="">
+
+                <div class="form-group col-md-6 col-sm-6">
+                  <label for="teaID" class="col-sm-4 control-label">教师编号</label>
+                  <div class="col-sm-8">
+                    <input type="text" name="teaID" class="form-control" id="teaID" placeholder="教师编号">
+                  </div>
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6">
+                  <label for="teaName" class="col-sm-4 control-label">教师姓名</label>
+                  <div class="col-sm-8">
+                    <input type="text" name="teaName" class="form-control" id="teaName" placeholder="教师姓名">
+                  </div>
+                </div>
+
+
+                <div class="form-group col-md-6 col-sm-6 ">
+                  <label class="col-sm-4 control-label">教师性别</label>
+                  <div class="col-sm-8">
+                    <select class="form-control" name="teaSex" id="teaSex">
+                      <option value="男">男</option>
+                      <option value="女">女</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6 ">
+                  <label class="col-sm-4 control-label">教师年龄</label>
+                  <div class="col-sm-8">
+                    <input type="text" name="teaAge" class="form-control" id="teaAge" placeholder="教师年龄">
+                  </div>
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6">
+                  <label class="col-sm-4 control-label">所在院系</label>
+                  <div class="col-sm-8">
+                    <select class="form-control" name="teaInstitute" id="teaInstitute">
+                      <option value="">请选择院系</option>
+                      <option value="计算机与信息工程学院">计算机与信息工程学院</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6 hidden-xs">
+                  <label for="teaStartWorkTime" class="col-sm-4 control-label">入职时间</label>
+                  <div class="col-sm-8">
+                    <!--指定 date标记-->
+                    <div class='input-group date' id='dateTimePicker'>
+                      <input type='text' class="form-control" id="teaStartWorkTime" name="teaStartWorkTime"/>
+                      <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6 hidden-xs">
+                  <label class="col-sm-4 control-label">职称</label>
+                  <div class="col-sm-8">
+                    <select id="teaRank" class="form-control" name="teaRank">
+                      <option value="">请选择职称</option>
+                      <option value="教授">教授</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6">
+                  <label class="col-sm-4 control-label">民族</label>
+                  <div class="col-sm-8">
+                    <select class="form-control" id="teaNation" name="teaNation">
+                      <option value="">请选择民族</option>
+                      <option value="汉族">汉族</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-6 col-sm-6">
+                  <label class="col-sm-4 control-label">政治面貌</label>
+                  <div class="col-sm-8">
+                    <select class="form-control" id="teaPoliticalStatus" name="teaPoliticalStatus">
+                      <option value="">请选择政治面貌</option>
+                      <option value="中共党员">中共党员</option>
+                    </select>
+                  </div>
+                </div>
+
+
+                <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <label for="teaImg" class="col-sm-2 control-label">教师照片</label>
+                  <div class="col-sm-10" style="padding: 0 10px 0">
+                    <input name="teaImg" type="file" class="form-control file-loading" id="teaImg" placeholder="教师照片">
+                  </div>
+                </div>
+
+                <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <label for="stuNotes" class="col-sm-2 control-label">备注</label>
+                  <div class="col-sm-10" style="padding: 0 10px 0">
+                    <textarea class="form-control" rows="3" name="stuNotes" id="teaNotes" required="required"></textarea>
+                  </div>
+                </div>
+
+
+                <div class="form-group">
+                  <div class="col-sm-6">
+                    <button type="submit" name="submit" class="btn btn-primary pull-right">提交</button>
+                  </div>
+                  <div class="col-sm-6">
+                    <button name="reset" type="reset" class="btn btn-default pull-left">重置</button>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+
+        </div>
+        <!--<div class="modal-footer">-->
+        <!--&lt;!&ndash;<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>&ndash;&gt;-->
+        <!--&lt;!&ndash;<button type="button" class="btn btn-primary">保存</button>&ndash;&gt;-->
+        <!--</div>-->
+      </div>
+    </div>
+  </div>
 
   <script type="text/javascript">
-
   $(function () {
-    $('#courseTable').bootstrapTable({
-      url: '',
-      toolbar: '#toolbar',
-      cache: false,
-      pagination: true,
-      pageSize: 10,
-      pageList: [10, 15, 20, 50],
-      sortable: true,
-      singleSelect: true,
-      clickToSelect: true,
-      search: true,
-      showRefresh: true,
-      showColumns: true,
-      onClickRow:function (row,$element) {
-        $('.info').removeClass('info');
-        $($element).addClass('info');
-      },
-      columns: [{
-        field: 'courseID',
-        title: '课程号',
-        sortable: true,
-      }, {
-        field: 'courseName',
-        title: '课程名'
-      }, {
-        field: 'courseTea',
-        title: '授课老师'
-      }, {
-        field: 'courseTime',
-        title: '上课时间'
-      }, {
-        field: 'coursePlace',
-        title: '上课地点'
-      },{
-        field: 'courseObj',
-        title: '开课对象'
-      },{
-        field: 'courseMaxNum',
-        title: '限制人数',
-        sortable: true,
-      },{
-        field: 'courseTotalTime',
-        title: '课时',
-        sortable: true,
-      },{
-        field: 'courseCredit',
-        title: '学分',
-        sortable: true,
-      }]
+    let pageType = window.location.search.split('=')[1]
+    // console.log(pageType)
+    let $navLis = $('.jump li')
+    console.log($navLis)
+    $navLis.removeClass('active')
+    if (pageType === 'course') {
+      $($navLis[0]).addClass('active')
+    }else if (pageType === 'stu') {
+      $($navLis[1]).addClass('active')
+    }else if(pageType === 'tea') {
+      $($navLis[2]).addClass('active')
+    }
 
-    });
+    if (pageType === 'course') {
+      $('#informationTable').bootstrapTable({
+        url: '',
+        toolbar: '#toolbar',
+        cache: false,
+        pagination: true,
+        pageSize: 10,
+        pageList: [10, 15, 20, 50],
+        sortable: true,
+        singleSelect: true,
+        clickToSelect: true,
+        search: true,
+        showRefresh: true,
+        showColumns: true,
+        detailView: true,
+        detailFormatter: courseDetail,
+        onClickRow:function (row,$element) {
+          $('.info').removeClass('info');
+          $($element).addClass('info');
+        },
+        columns: [{
+          field: 'courseID',
+          title: '课程号',
+          sortable: true,
+        }, {
+          field: 'courseName',
+          title: '课程名'
+        }, {
+          field: 'courseType',
+          title: '课程类型'
+        },{
+          field: 'courseInstitute',
+          title: '开设院系'
+        }, {
+          field: 'courseTotalTime',
+          title: '课程学时',
+          sortable: true,
+        },{
+          field: 'courseCredit',
+          title: '课程学分',
+          sortable: true,
+        },{
+          field: 'courseImg',
+          title: '课程图片',
+          visible: false
+        },{
+          field: 'courseIntro',
+          title: '课程简介',
+          visible: false
+        }
+        ]
 
+      });
+    }else if (pageType === 'stu') {
+      $('#informationTable').bootstrapTable({
+        url: '',
+        toolbar: '#toolbar',
+        cache: false,
+        pagination: true,
+        pageSize: 10,
+        pageList: [10, 15, 20, 50],
+        sortable: true,
+        singleSelect: true,
+        clickToSelect: true,
+        search: true,
+        showRefresh: true,
+        showColumns: true,
+        detailView: true,
+        detailFormatter: stuDetail,
+        onClickRow:function (row,$element) {
+          $('.info').removeClass('info');
+          $($element).addClass('info');
+        },
+        columns: [{
+          field: 'stuID',
+          title: '学生学号',
+          sortable: true,
+        }, {
+          field: 'stuName',
+          title: '学生姓名'
+        }, {
+          field: 'stuSex',
+          title: '学生性别'
+        },{
+          field: 'stuAge',
+          title: '学生年龄',
+          sortable: true,
+        },{
+          field: 'stuInstitute',
+          title: '所在院系'
+        }, {
+          field: 'stuProfessional',
+          title: '所在专业',
+        },{
+          field: 'stuNation',
+          title: '民族',
+        },{
+          field: 'stuPoliticalStatus',
+          title: '政治面貌',
+        },{
+          field: 'stuImg',
+          title: '学生照片',
+          visible: false
+        },{
+          field: 'stuNotes',
+          title: '学生备注',
+          visible: false
+        }
+        ]
+
+      });
+    }else if (pageType === 'tea') {
+
+      //日历
+      $('#dateTimePicker').datetimepicker({
+        format: 'yyyy-mm-dd',
+        minView: "month",
+        locale: moment.locale('zh-cn'),
+        autoclose: true
+      });
+
+      $('#informationTable').bootstrapTable({
+        url: '',
+        toolbar: '#toolbar',
+        cache: false,
+        pagination: true,
+        pageSize: 10,
+        pageList: [10, 15, 20, 50],
+        sortable: true,
+        singleSelect: true,
+        clickToSelect: true,
+        search: true,
+        showRefresh: true,
+        showColumns: true,
+        detailView: true,
+        detailFormatter: teaDetail,
+        onClickRow:function (row,$element) {
+          $('.info').removeClass('info');
+          $($element).addClass('info');
+        },
+        columns: [{
+          field: 'teaID',
+          title: '教师编号',
+          sortable: true,
+        }, {
+          field: 'teaName',
+          title: '教师名字'
+        }, {
+          field: 'teaSex',
+          title: '教师性别'
+        },{
+          field: 'teaAge',
+          title: '教师年龄',
+          sortable: true,
+        }, {
+          field: 'teaInstitute',
+          title: '所属学院',
+          sortable: true,
+        },{
+          field: 'teaStartWorkTime',
+          title: '入职时间',
+          sortable: true,
+        },{
+          field: 'teaRank',
+          title: '教师职称',
+          sortable: true,
+        },{
+          field: 'teaNation',
+          title: '民族',
+        },{
+          field: 'teaPoliticalStatus',
+          title: '政治面貌',
+        }, {
+          field: 'teaImg',
+          title: '教师照片',
+          visible: false
+        },{
+          field: 'teaNotes',
+          title: '教师备注',
+          visible: false
+        }
+        ]
+
+      });
+    }
+
+
+    //教师详情行
+    function teaDetail(index, row) {
+      let detailRowHtml = `
+        <form role="form" class="courseDetailView">
+          <div class="form-group col-md-6 col-sm-6">
+            <label for="detailCourseID" class="col-sm-4 control-label">教师编号</label>
+            <div class="col-sm-8">
+              <input type="text" value="${row.teaID}" name="detailTeaID" class="form-control" id="detailTeaID" readonly="readonly">
+            </div>
+           </div>
+
+          <div class="form-group col-md-6 col-sm-6">
+            <label for="detailCourseName" class="col-sm-4 control-label">教师姓名</label>
+            <div class="col-sm-8">
+              <input type="text" value="${row.teaName}" name="detailTeaName" class="form-control" id="detailTeaName" readonly="readonly">
+            </div>
+          </div>
+
+          <div class="form-group col-md-6 col-sm-6 ">
+            <label class="col-sm-4 control-label">教师性别</label>
+            <div class="col-sm-8">
+              <input type="text" value="${row.teaSex}" name="detailTeaSex" class="form-control" id="detailTeaSex" readonly="readonly">
+            </div>
+          </div>
+
+          <div class="form-group col-md-6 col-sm-6">
+            <label class="col-sm-4 control-label">教师年龄</label>
+            <div class="col-sm-8">
+              <input type="text" value="${row.teaAge}" name="detailTeaAge" class="form-control" id="detailteaAge" readonly="readonly">
+            </div>
+          </div>
+
+
+          <div class="form-group col-md-6 col-sm-6 hidden-xs">
+            <label class="col-sm-4 control-label">所属院系</label>
+            <div class="col-sm-8">
+              <input type="text" value="${row.teaInstitute}" name="detailTeaInstitute" class="form-control" id="detailTeaInstitute" readonly="readonly">
+            </div>
+          </div>
+
+          <div class="form-group col-md-6 col-sm-6">
+            <label class="col-sm-4 control-label">入职时间</label>
+            <div class="col-sm-8">
+              <input type="text" value="${row.teaStartWorkTime}" name="detailTeaStartWorkTime" class="form-control" id="detailTeaStartWorkTime" readonly="readonly">
+            </div>
+          </div>
+
+          <div class="form-group col-md-6 col-sm-6 hidden-xs">
+            <label class="col-sm-4 control-label">职称</label>
+            <div class="col-sm-8">
+              <input type="text" value="${row.teaRank}" name="detailTeaRank" class="form-control" id="detailTeaRank" readonly="readonly">
+            </div>
+          </div>
+
+          <div class="form-group col-md-6 col-sm-6 hidden-xs">
+            <label class="col-sm-4 control-label">民族</label>
+            <div class="col-sm-8">
+              <input type="text" value="${row.teaNation}" name="detailTeaNation" class="form-control" id="detailTeaNation" readonly="readonly">
+            </div>
+          </div>
+
+          <div class="form-group col-md-6 col-sm-6 hidden-xs">
+            <label class="col-sm-4 control-label">政治面貌</label>
+            <div class="col-sm-8">
+              <input type="text" value="${row.teaPoliticalStatus}" name="detailTeaPoliticalStatus" class="form-control" id="detailTeaPoliticalStatus" readonly="readonly">
+            </div>
+          </div>
+
+          <div class="form-group col-md-6 col-sm-6">
+            <label class="col-sm-4 control-label">教师照片</label>
+            <div class="col-sm-8">
+              <img src="./image/course/大学物理.jpg" alt="图片暂时无法查看！" style="height: 78px;width: 85px">
+            </div>
+          </div>
+
+          <div class="form-group col-md-6 col-sm-6">
+            <label for="detailCourseIntro" class="col-sm-4 control-label">教师备注</label>
+            <div class="col-sm-8">
+              <textarea class="form-control" rows="3" name="detailTeaNotes" id="detailTeaNotes" disabled="disabled">${row.teaNotes}</textarea>
+            </div>
+          </div>
+
+        </form>
+
+
+      `
+      return detailRowHtml
+
+    }
+
+    //学生详情行
+    function stuDetail(index, row) {
+      let detailRowHtml = `
+        <form role="form" class="courseDetailView">
+          <div class="form-group col-md-6 col-sm-6">
+            <label for="detailCourseID" class="col-sm-4 control-label">学生学号</label>
+            <div class="col-sm-8">
+              <input type="text" value="${row.stuID}" name="detailStuID" class="form-control" id="detailStuID" readonly="readonly">
+            </div>
+           </div>
+
+          <div class="form-group col-md-6 col-sm-6">
+            <label for="detailCourseName" class="col-sm-4 control-label">学生姓名</label>
+            <div class="col-sm-8">
+              <input type="text" value="${row.stuName}" name="detailStuName" class="form-control" id="detailStuName" readonly="readonly">
+            </div>
+          </div>
+
+          <div class="form-group col-md-6 col-sm-6 ">
+            <label class="col-sm-4 control-label">学生性别</label>
+            <div class="col-sm-8">
+              <input type="text" value="${row.stuSex}" name="detailCourseType" class="form-control" id="detailStuSex" readonly="readonly">
+            </div>
+          </div>
+
+          <div class="form-group col-md-6 col-sm-6">
+            <label class="col-sm-4 control-label">学生年龄</label>
+            <div class="col-sm-8">
+              <input type="text" value="${row.stuAge}" name="detailStuAge" class="form-control" id="detailStuAge" readonly="readonly">
+            </div>
+          </div>
+
+
+          <div class="form-group col-md-6 col-sm-6 hidden-xs">
+            <label class="col-sm-4 control-label">所在院系</label>
+            <div class="col-sm-8">
+              <input type="text" value="${row.stuInstitute}" name="detailStuInstitute" class="form-control" id="detailStuInstitute" readonly="readonly">
+            </div>
+          </div>
+
+          <div class="form-group col-md-6 col-sm-6">
+            <label class="col-sm-4 control-label">所在专业</label>
+            <div class="col-sm-8">
+              <input type="text" value="${row.stuProfessional}" name="detailStuProfessional" class="form-control" id="detailStuProfessional" readonly="readonly">
+            </div>
+          </div>
+
+          <div class="form-group col-md-6 col-sm-6 hidden-xs">
+            <label class="col-sm-4 control-label">民族</label>
+            <div class="col-sm-8">
+              <input type="text" value="${row.stuNation}" name="detailStuNation" class="form-control" id="detailStuNation" readonly="readonly">
+            </div>
+          </div>
+
+          <div class="form-group col-md-6 col-sm-6 hidden-xs">
+            <label class="col-sm-4 control-label">政治面貌</label>
+            <div class="col-sm-8">
+              <input type="text" value="${row.stuPoliticalStatus}" name="detailStuPoliticalStatus" class="form-control" id="detailStuPoliticalStatus" readonly="readonly">
+            </div>
+          </div>
+
+          <div class="form-group col-md-6 col-sm-6">
+            <label class="col-sm-4 control-label">学生照片</label>
+            <div class="col-sm-8">
+              <img src="./image/course/大学物理.jpg" alt="图片暂时无法查看！" style="height: 78px;width: 85px">
+            </div>
+          </div>
+
+          <div class="form-group col-md-6 col-sm-6">
+            <label for="detailCourseIntro" class="col-sm-4 control-label">学生备注</label>
+            <div class="col-sm-8">
+              <textarea class="form-control" rows="3" name="detailStuNotes" id="detailStuNotes" disabled="disabled">${row.stuNotes}</textarea>
+            </div>
+          </div>
+
+        </form>
+
+
+      `
+      return detailRowHtml
+
+    }
+
+    //课程详情行
+    function courseDetail(index, row) {
+      let detailRowHtml = `
+        <form role="form" class="courseDetailView">
+          <div class="form-group col-md-6 col-sm-6">
+            <label for="detailCourseID" class="col-sm-4 control-label">课程编号</label>
+            <div class="col-sm-8">
+              <input type="text" value="${row.courseID}" name="detailCourseID" class="form-control" id="detailCourseID" readonly="readonly">
+            </div>
+           </div>
+
+          <div class="form-group col-md-6 col-sm-6">
+            <label for="detailCourseName" class="col-sm-4 control-label">课程名称</label>
+            <div class="col-sm-8">
+              <input type="text" value="${row.courseName}" name="detailCourseName" class="form-control" id="detailCourseName" readonly="readonly">
+            </div>
+          </div>
+
+          <div class="form-group col-md-6 col-sm-6 ">
+            <label class="col-sm-4 control-label">课程类型</label>
+            <div class="col-sm-8">
+              <input type="text" value="${row.courseType}" name="detailCourseType" class="form-control" id="detailCourseType" readonly="readonly">
+            </div>
+          </div>
+
+          <div class="form-group col-md-6 col-sm-6">
+            <label class="col-sm-4 control-label">开设院系</label>
+            <div class="col-sm-8">
+              <input type="text" value="${row.courseInstitute}" name="detailCourseInstitute" class="form-control" id="detailCourseInstitute" readonly="readonly">
+            </div>
+          </div>
+
+
+          <div class="form-group col-md-6 col-sm-6 hidden-xs">
+            <label class="col-sm-4 control-label">课程学时</label>
+            <div class="col-sm-8">
+              <input type="text" value="${row.courseTotalTime}" name="detailCourseTotalTime" class="form-control" id="detailCourseTotalTime" readonly="readonly">
+            </div>
+          </div>
+
+          <div class="form-group col-md-6 col-sm-6">
+            <label class="col-sm-4 control-label">课程学分</label>
+            <div class="col-sm-8">
+              <input type="text" value="${row.courseCredit}" name="detailCourseCredit" class="form-control" id="detailCourseCredit" readonly="readonly">
+            </div>
+          </div>
+
+          <div class="form-group col-md-6 col-sm-6">
+            <label class="col-sm-4 control-label">课程图片</label>
+            <div class="col-sm-8">
+              <img src="./image/course/大学物理.jpg" alt="图片暂时无法查看！" style="height: 78px;width: 85px">
+            </div>
+          </div>
+
+          <div class="form-group col-md-6 col-sm-6">
+            <label for="detailCourseIntro" class="col-sm-4 control-label">课程简介</label>
+            <div class="col-sm-8">
+              <textarea class="form-control" rows="3" name="detailCourseIntro" id="detailCourseIntro" disabled="disabled">${row.courseIntro}</textarea>
+            </div>
+          </div>
+
+        </form>
+
+
+      `
+      return detailRowHtml
+
+    }
 
     $('.fixed-table-toolbar').append(`
     <div class="columns columns-right pull-right" style="padding: 0 5px">
@@ -353,37 +1044,62 @@
     </div>
     `)
 
-
+    //添加按钮
     $('#btnAdd').click(function () {
-      $('#courseModal').modal({
+      // $('#courseModal').modal({
+      //   backdrop:'static'
+      // })
+      // //清除修改后残留错误和成功样式
+      // $('#courseModal .form-group').removeClass( "has-error" ).removeClass("has-success")
+      // $('#courseModal .help-block').empty()
+      // //防止修改后，信息残留
+      // $('.modal input').val('')
+      // $('.modal select').val('')
+      // $('.modal textarea').val('')
+
+      //根据类型判断是哪个模态窗口
+      $('#'+pageType+'Modal').modal({
         backdrop:'static'
       })
+      //清除修改后残留错误和成功样式
+      $('.modal .form-group').removeClass( "has-error" ).removeClass("has-success")
+      $('.modal .help-block').empty()
+      //防止修改后，信息残留
       $('.modal input').val('')
+      $('.modal select').val('')
+      $('.modal textarea').val('')
     })
 
-    // 这个修改只能得到表格里面的信息，图片和简介没有，需要写ajax
+    // 这个修改只能得到表格里面的信息
     $('#btnEdit').click(function () {
       let list = getRowContent()
-      $('#courseModal').modal({
-        backdrop:'static'
-      })
-      setModalVal(list)
+      if (list) {
+        $('#'+pageType+'Modal').modal({
+          backdrop:'static'
+        })
+        //防止添加失败后，有残留的错误提示
+        $('.modal .form-group').removeClass( "has-error" ).removeClass("has-success")
+        $('.modal .help-block').empty()
+
+        setModalVal(list)
+      }
     })
 
+    //删除课程记录
     $('#btnDel').click(function () {
-      let $table = $('#courseTable')
+      let $table = $('#informationTable')
       let list = getRowContent()
       let id =[];
-      id.push(list['courseID']);
+      id.push(list[pageType+'ID']);
       $table.bootstrapTable('remove', {
-        field:'courseID',
+        field: pageType+'ID',
         values: id
       });
 
     })
 
-
-    $('#courseImg').fileinput({
+    //上传图片
+    $('#'+pageType+'Img').fileinput({
       language: 'zh',
       showPreview : false,
       dropZoneEnabled: false
@@ -392,11 +1108,11 @@
 
     // 获取选中行对象
     function getRowContent(){
-      let $table = $('#courseTable')
+      let $table = $('#informationTable')
       let index = $table.find("tr.info").data("index")
       let list = $table.bootstrapTable('getData')[index]
       if(list == null){
-        alert("请选中一行");
+        alert("请选中一行！");
         return false;
       }else{
         console.log(list)
@@ -404,17 +1120,39 @@
       }
     }
 
-    // 给模态窗口赋值，只能获取表格里面的数据，完整信息需要写ajax
+    // 给模态窗口赋值，只能获取表格里面的数据
     function setModalVal(obj) {
-      $('#courseID').val(obj.courseID)
-      $('#courseName').val(obj.courseName)
-      $('#courseTea').val(obj.courseTea)
-      $('#courseTime').val(obj.courseTime)
-      $('#coursePlace').val(obj.coursePlace)
-      $('#courseObj').val(obj.courseObj)
-      $('#courseMaxNum').val(obj.courseMaxNum)
-      $('#courseTotalTime').val(obj.courseTotalTime)
-      $('#courseCredit').val(obj.courseCredit)
+      if (pageType === 'course') {
+        $('#courseID').val(obj.courseID)
+        $('#courseName').val(obj.courseName)
+        $('#courseType').val(obj.courseType)
+        $('#courseInstitute').val(obj.courseInstitute)
+        $('#courseTotalTime').val(obj.courseTotalTime)
+        $('#courseCredit').val(obj.courseCredit)
+        $('#courseIntro').val(obj.courseIntro)
+      }else if(pageType === 'stu') {
+        $('#stuID').val(obj.stuID)
+        $('#stuName').val(obj.stuName)
+        $('#stuSex').val(obj.stuSex)
+        $('#stuAge').val(obj.stuAge)
+        $('#stuInstitute').val(obj.stuInstitute)
+        $('#stuProfessional').val(obj.stuProfessional)
+        $('#stuNation').val(obj.stuNation)
+        $('#stuPoliticalStatus').val(obj.stuPoliticalStatus)
+        $('#stuNotes').val(obj.stuNotes)
+      }else if (pageType === 'tea') {
+        $('#teaID').val(obj.teaID)
+        $('#teaName').val(obj.teaName)
+        $('#teaSex').val(obj.teaSex)
+        $('#teaAge').val(obj.teaAge)
+        $('#teaInstitute').val(obj.teaInstitute)
+        $('#teaStartWorkTime').val(obj.teaStartWorkTime)
+        $('#teaRank').val(obj.teaRank)
+        $('#teaNation').val(obj.teaNation)
+        $('#teaPoliticalStatus').val(obj.teaPoliticalStatus)
+        $('#teaNotes').val(obj.teaNotes)
+      }
+
     }
 
     //模态表单提交正则
@@ -424,7 +1162,7 @@
       }
     } );
 
-
+    //添加课程模态窗口验证规则
     $( "#courseInfo" ).validate( {
       rules: {
         courseID: {
@@ -433,61 +1171,129 @@
         courseName: {
           required: true,
         },
-        courseTea: {
+        courseType: {
           required: true,
         },
-        courseTime: {
+        courseInstitute: {
           required: true
-        },
-        coursePlace: {
-          required: true
-        },
-        courseObj: {
-          required: true
-        },
-        courseMaxNum: {
-          required: true,
-          digits:true,
-          range:[30, 200]
         },
         courseTotalTime: {
           required: true
         },
         courseCredit: {
+          required: true
+        },
+        courseIntro: {
           required: true
         }
 
       },
       messages: {
         courseID: {
-          required: "请输入课程号",
+          required: "请输入课程号！",
         },
         courseName: {
-          required: "请输入课程名",
+          required: "请输入课程名！",
         },
-        courseTea: {
-          required: "请输入授课教师"
+        courseType: {
+          required: '请选择课程类型！'
         },
-        courseTime: {
-          required: "请输入上课时间"
-        },
-        coursePlace: {
-          required: "请输入上课地点"
-        },
-        courseObj: {
-          required: "请输入上课对象"
-        },
-        courseMaxNum: {
-          required: "请输入最大限选人数",
-          digits: "请输入整数",
-          range: "数据范围为30-200"
+        courseInstitute: {
+          required: '请选择课程开设院系！'
         },
         courseTotalTime: {
-          required: "请输入课程总课时"
+          required: "请选择课程学时！"
         },
         courseCredit: {
-          required: "请输入课程学分"
+          required: "请选择课程学分！"
+        }
+        ,
+        courseIntro: {
+          required: '请输入课程简介！'
+        }
+
+      },
+      errorElement: "em",
+      errorPlacement: function ( error, element ) {
+        // Add the `help-block` class to the error element
+        error.addClass( "help-block" );
+
+        if ( element.prop( "type" ) === "checkbox" ) {
+          error.insertAfter( element.parent( "label" ) );
+        } else {
+          error.insertAfter( element );
+        }
+      },
+      highlight: function ( element, errorClass, validClass ) {
+        $( element ).parents( ".form-group" ).addClass( "has-error" ).removeClass( "has-success" );
+      },
+      unhighlight: function (element, errorClass, validClass) {
+        $( element ).parents( ".form-group" ).addClass( "has-success" ).removeClass( "has-error" );
+      }
+    } );
+
+    //添加学生模态窗口验证规则
+    $( "#stuInfo" ).validate( {
+      rules: {
+        stuID: {
+          required: true,
         },
+        stuName: {
+          required: true,
+        },
+        stuSex: {
+          required: true,
+        },
+        stuAge: {
+          required: true
+        },
+        stuInstitute: {
+          required: true
+        },
+        stuProfessional: {
+          required: true
+        },
+        stuNation: {
+          required: true
+        },
+        stuPoliticalStatus: {
+          required: true
+        },
+        // stuNotes: {
+        //   required: true
+        // },
+
+      },
+      messages: {
+        stuID: {
+          required: "请输入学生学号！",
+        },
+        stuName: {
+          required: "请输入学生姓名！",
+        },
+        stuSex: {
+          required: '请选择学生性别！'
+        },
+        stuAge: {
+          required: '请输入学生年龄！'
+        },
+        stuInstitute: {
+          required: "请选择学生所在学院！"
+        },
+        stuProfessional: {
+          required: "请选择学生所在专业！"
+        }
+        ,
+        stuNation: {
+          required: '请选择学生民族！'
+        },
+        stuPoliticalStatus: {
+          required: '请选择学生政治面貌！'
+        },
+        // stuNotes: {
+        //   required: '请输入学生备注！'
+        // }
+
       },
       errorElement: "em",
       errorPlacement: function ( error, element ) {
@@ -509,16 +1315,94 @@
     } );
 
 
-    // $.validator.addMethod("checkCourseTime",function(value,element,params){
-    //   let checkCourseTime = //;
-    //   return this.optional(element)||(checkCourseTime.test(value));
-    // },"*请输入正确的课程时间！")
-    //
-    //
-    // $.validator.addMethod("checkCoursePlace",function(value,element,params){
-    //   let checkCoursePlace = //;
-    //   return this.optional(element)||(checkCoursePlace.test(value));
-    // },"*请输入正确的课程地点！")
+    //添加教师模态窗口验证规则
+    $( "#teaInfo" ).validate( {
+      rules: {
+        teaID: {
+          required: true,
+        },
+        teaName: {
+          required: true,
+        },
+        teaSex: {
+          required: true,
+        },
+        teaAge: {
+          required: true
+        },
+        teaInstitute: {
+          required: true
+        },
+        teaStartWorkTime: {
+          required: true
+        },
+        teaRank: {
+          required: true
+        },
+        teaNation: {
+          required: true
+        },
+        teaPoliticalStatus: {
+          required: true
+        },
+        // teaNotes: {
+        //   required: true
+        // },
+
+      },
+      messages: {
+        teaID: {
+          required: "请输入教师编号！",
+        },
+        teaName: {
+          required: "请输入教师姓名！",
+        },
+        teaSex: {
+          required: '请选择教师性别！'
+        },
+        teaAge: {
+          required: '请输入教师年龄！'
+        },
+        teaInstitute: {
+          required: "请选择教师所在学院！"
+        },
+        teaStartWorkTime: {
+          required: "请选择教师入职时间！"
+        }
+        ,
+        teaRank: {
+          required: '请选择教师职称！'
+        },
+        teaNation: {
+          required: '请选择教师民族！'
+        },
+        teaPoliticalStatus: {
+          required: '请选择教师政治面貌！'
+        },
+        // teaNotes: {
+        //   required: '请输入学生备注！'
+        // }
+
+      },
+      errorElement: "em",
+      errorPlacement: function ( error, element ) {
+        // Add the `help-block` class to the error element
+        error.addClass( "help-block" );
+
+        if ( element.prop( "type" ) === "checkbox" ) {
+          error.insertAfter( element.parent( "label" ) );
+        } else {
+          error.insertAfter( element );
+        }
+      },
+      highlight: function ( element, errorClass, validClass ) {
+        $( element ).parents( ".form-group" ).addClass( "has-error" ).removeClass( "has-success" );
+      },
+      unhighlight: function (element, errorClass, validClass) {
+        $( element ).parents( ".form-group" ).addClass( "has-success" ).removeClass( "has-error" );
+      }
+    } );
+
 
 
 
